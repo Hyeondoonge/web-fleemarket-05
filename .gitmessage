@@ -9,7 +9,9 @@
 ################
 # 꼬릿말(footer)을 아랫줄에 작성 (관련된 이슈 번호 등 추가)
 
-
+################
+# Co-authored-by: Hyeondoonge <jsi06138@gmail.com>
+# Co-authored-by: sangrimlee <contact@sangrim.dev>
 ################
 # feat: 새로운 기능 추가
 # fix: 버그 수정
