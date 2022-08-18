@@ -15,9 +15,6 @@ export class DateEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ApiProperty({
-    description: '삭제 날짜',
-  })
-  @DeleteDateColumn()
+  @DeleteDateColumn({ select: false })
   deletedAt: Date;
 }
