@@ -1,6 +1,8 @@
+import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { envFilePath, Environment, validate } from './config';
 import { UsersModule } from './users/users.module';
 
@@ -24,6 +26,10 @@ import { UsersModule } from './users/users.module';
         synchronize: true,
         logging: configService.get('NODE_ENV') !== Environment.Production,
       }),
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), '..', 'client', 'dist'),
+      exclude: ['/api', '/docs'],
     }),
     UsersModule,
   ],

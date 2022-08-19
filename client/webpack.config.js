@@ -23,16 +23,11 @@ module.exports = {
       },
       {
         test: /\.svg$/,
+        issuer: /\.[jt]sx?$/,
         use: [
           {
             loader: '@svgr/webpack',
-            issuer: /\.[jt]sx?$/,
-            use: [
-              {
-                loader: '@svgr/webpack',
-                options: { icon: true, typescript: true },
-              },
-            ],
+            options: { icon: true, typescript: true },
           },
         ],
       },
