@@ -28,6 +28,12 @@ class EnvironmentVariables {
 
   @IsString()
   DB_NAME: string;
+
+  @IsString()
+  JWT_SECRET_KEY: string;
+
+  @IsString()
+  JWT_EXPIRES_IN: string;
 }
 
 function createErrorMessages(errors: ValidationError[]) {

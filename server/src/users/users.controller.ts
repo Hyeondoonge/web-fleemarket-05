@@ -1,6 +1,9 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Res } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ExceptionResponse } from 'src/exceptions/response';
+import { AuthService } from 'src/auth/auth.service';
+import { ACCESS_TOKEN_COOKIE_KEY } from 'src/auth/constants';
+import { ExceptionResponse } from 'src/exceptions/responses';
 import { CreateUserDto } from './dtos';
 import { IsAvailableResponse } from './responses';
 import { UsersService } from './users.service';
@@ -8,7 +11,11 @@ import { UsersService } from './users.service';
 @ApiTags('사용자 관련 API')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly configService: ConfigService,
+    private readonly authService: AuthService
+  ) {}
 
   @ApiOperation({ description: '회원가입 API' })
   @ApiBadRequestResponse({
@@ -16,8 +23,12 @@ export class UsersController {
     description: '이미 사용중인 이메일을 요청한 경우',
   })
   @Post('/')
-  async createUser(@Body() createUserDto: CreateUserDto) {
-    await this.usersService.createUser(createUserDto);
+  async createUser(@Body() createUserDto: CreateUserDto, @Res({ passthrough: true }) res) {
+    const newUser = await this.usersService.createUser(createUserDto);
+    const { accessToken, accessTokenCookieOption } = await this.authService.createAccessToken(
+      newUser.id
+    );
+    res.cookie(ACCESS_TOKEN_COOKIE_KEY, accessToken, accessTokenCookieOption);
   }
 
   @ApiOperation({ description: '이메일 사용 가능 여부 API' })

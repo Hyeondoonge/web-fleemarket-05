@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { envFilePath, Environment, validate } from './config';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -32,6 +33,8 @@ import { UsersModule } from './users/users.module';
       exclude: ['/api', '/docs'],
     }),
     UsersModule,
+    AuthModule,
   ],
+  providers: [],
 })
 export class AppModule {}
