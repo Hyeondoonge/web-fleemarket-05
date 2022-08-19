@@ -32,4 +32,8 @@ export class User extends UUIDEntity {
       this.password = await bcrypt.hash(this.password, 10);
     }
   }
+
+  async comparePassword(plainPassword: string) {
+    return await bcrypt.compare(plainPassword, this.password);
+  }
 }
