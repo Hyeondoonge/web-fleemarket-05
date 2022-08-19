@@ -1,5 +1,6 @@
 module.exports = {
   env: {
+    node: true,
     browser: true,
     es2021: true,
   },
@@ -18,4 +19,5 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   overrides: [],
   rules: {},
+  ignorePatterns: ['.eslintrc.js', '*.config.js'],
 };
