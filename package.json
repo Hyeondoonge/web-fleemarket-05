@@ -10,7 +10,7 @@
     "server"
   ],
   "scripts": {
-    "client:dev": "yarn worspace client dev",
+    "client:dev": "yarn workspace client dev",
     "client:build": "yarn workspace client build",
     "server:dev": "yarn workspace server dev",
     "server:build": "yarn workspace server build",
