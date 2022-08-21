@@ -23,7 +23,7 @@ export class User extends UUIDEntity {
   @IsEmail()
   email: string;
 
-  @Column({ select: false })
+  @Column({ select: false, nullable: true })
   password: string;
 
   @BeforeInsert()

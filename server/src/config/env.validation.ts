@@ -34,6 +34,15 @@ class EnvironmentVariables {
 
   @IsString()
   JWT_EXPIRES_IN: string;
+
+  @IsString()
+  GITHUB_CLIENT_ID: string;
+
+  @IsString()
+  GITHUB_CLIENT_SECRET: string;
+
+  @IsString()
+  GITHUB_REDIRECT_URL: string;
 }
 
 function createErrorMessages(errors: ValidationError[]) {

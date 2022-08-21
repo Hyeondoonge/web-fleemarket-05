@@ -4,5 +4,7 @@ export enum ErrorCode {
   A001 = 'A001', // 로그인 실패 이메일 존재 X
   A002 = 'A002', // 로그인 실패 비밀번호 일치 X
   A003 = 'A003', // JWT 토큰 에러,
-  A004 = 'A004', // JWT 토큰 만료
+  A004 = 'A004', // JWT 토큰 만료,
+  A005 = 'A005', // Github Code 에러,
+  A006 = 'A006', // Github Access Token 에러
 }
