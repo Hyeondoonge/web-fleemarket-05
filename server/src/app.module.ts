@@ -6,6 +6,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { envFilePath, Environment, validate } from './config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ArticlesModule } from './articles/articles.module';
 import { UploadModule } from './upload/upload.module';
 
 @Module({
@@ -35,6 +36,7 @@ import { UploadModule } from './upload/upload.module';
     }),
     UsersModule,
     AuthModule,
+    ArticlesModule,
     UploadModule,
   ],
   providers: [],

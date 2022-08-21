@@ -10,5 +10,5 @@ export class IntIDEntity extends DateEntity {
   })
   @PrimaryGeneratedColumn()
   @IsInt()
-  id: string;
+  id: number;
 }
