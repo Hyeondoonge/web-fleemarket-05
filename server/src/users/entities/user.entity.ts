@@ -1,8 +1,9 @@
 import * as bcrypt from 'bcryptjs';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, Length } from 'class-validator';
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { UUIDEntity } from 'src/common/entities';
+import { Article } from 'src/articles/entities';
 
 @Entity()
 export class User extends UUIDEntity {
@@ -25,6 +26,15 @@ export class User extends UUIDEntity {
 
   @Column({ select: false, nullable: true })
   password: string;
+
+  @OneToMany(() => Article, (article) => article.seller)
+  articles: Article[];
+
+  @ManyToMany(() => Article, (article) => article.likeUsers)
+  @JoinTable({
+    name: 'user_like_article',
+  })
+  likeArticles: Article[];
 
   @BeforeInsert()
   async hashPassword() {
