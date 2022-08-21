@@ -1,11 +1,13 @@
-import { Body, Controller, Get, Post, Query, Res } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Body, Controller, Get, Post, Query, Res, UseGuards } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { ACCESS_TOKEN_COOKIE_KEY } from 'src/auth/constants';
+import { AuthUser } from 'src/auth/decorators';
+import { AuthGuard } from 'src/auth/guards';
 import { ExceptionResponse } from 'src/exceptions/responses';
 import { CreateUserDto } from './dtos';
 import { IsAvailableResponse } from './responses';
+import { UserResponse } from './responses/user.respones';
 import { UsersService } from './users.service';
 
 @ApiTags('사용자 관련 API')
@@ -13,7 +15,6 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly configService: ConfigService,
     private readonly authService: AuthService
   ) {}
 
@@ -39,5 +40,13 @@ export class UsersController {
     return {
       isAvailable: !user,
     };
+  }
+
+  @UseGuards(AuthGuard)
+  @ApiOperation({ description: '사용자 정보 조회 API' })
+  @ApiOkResponse({ type: UserResponse })
+  @Get('/my')
+  async findUser(@AuthUser() user) {
+    return await this.usersService.findByUserId(user.id);
   }
 }

@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CustomException } from 'src/exceptions';
 import { ErrorCode } from 'src/exceptions/enums';
+import { Region } from 'src/regions/entities';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos';
 import { User } from './entities';
@@ -12,6 +13,16 @@ export class UsersService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>
   ) {}
+
+  async findByUserId(userId: string) {
+    const user = await this.usersRepository.findOne({
+      where: { id: userId },
+      select: ['id', 'username', 'email', 'regions'],
+      relations: ['regions'],
+    });
+
+    return user;
+  }
 
   async findByEmail(email: string) {
     const user = await this.usersRepository.findOneBy({
@@ -46,5 +57,12 @@ export class UsersService {
       this.usersRepository.create({ email, username })
     );
     return newUser;
+  }
+
+  async updateUserRegions(user: User, newRegions: Region[]) {
+    await this.usersRepository.save({
+      ...user,
+      regions: newRegions,
+    });
   }
 }
