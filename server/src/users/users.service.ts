@@ -20,6 +20,16 @@ export class UsersService {
     return user;
   }
 
+  async findUserDetailByEmail(email: string) {
+    const user = await this.usersRepository.findOne({
+      select: ['id', 'email', 'username', 'password'],
+      where: {
+        email,
+      },
+    });
+    return user;
+  }
+
   async createUser({ email, username, password }: CreateUserDto) {
     const user = await this.findByEmail(email);
     if (user) {
@@ -27,6 +37,13 @@ export class UsersService {
     }
     const newUser = await this.usersRepository.save(
       this.usersRepository.create({ email, username, password })
+    );
+    return newUser;
+  }
+
+  async createGithubUser({ email, username }: { email: string; username: string }) {
+    const newUser = await this.usersRepository.save(
+      this.usersRepository.create({ email, username })
     );
     return newUser;
   }

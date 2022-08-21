@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { SignInDto } from './dtos';
 import { TokenPayload } from './interfaces';
 import { ConfigService } from '@nestjs/config';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
@@ -16,16 +17,12 @@ export class AuthService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly userService: UsersService
   ) {}
 
   async validateUser({ email, password }: SignInDto) {
-    const user = await this.usersRepository.findOne({
-      select: ['id', 'email', 'username', 'password'],
-      where: {
-        email,
-      },
-    });
+    const user = await this.userService.findUserDetailByEmail(email);
     if (!user) {
       throw new CustomException(HttpStatus.UNAUTHORIZED, ErrorCode.A001);
     }
@@ -66,6 +63,65 @@ export class AuthService {
         throw new CustomException(HttpStatus.UNAUTHORIZED, ErrorCode.A004);
       }
       throw new CustomException(HttpStatus.UNAUTHORIZED, ErrorCode.V001);
+    }
+  }
+
+  async validateGithubCode(code: string) {
+    const GITHUB_CLIENT_ID = this.configService.get<string>('GITHUB_CLIENT_ID');
+    const GITHUB_CLIENT_SECRET = this.configService.get<string>('GITHUB_CLIENT_SECRET');
+
+    const response = await fetch(
+      `https://github.com/login/oauth/access_token?client_id=${GITHUB_CLIENT_ID}&code=${code}&client_secret=${GITHUB_CLIENT_SECRET}`,
+      {
+        headers: { Accept: 'application/json' },
+      }
+    );
+    const { access_token } = await response.json();
+
+    if (!access_token) {
+      throw new CustomException(HttpStatus.UNAUTHORIZED, ErrorCode.A005);
+    }
+    return access_token;
+  }
+
+  async getGithubUserByAccessToken(access_token: string) {
+    try {
+      const response = await fetch(`https://api.github.com/user`, {
+        headers: { Authorization: `token ${access_token}`, Accept: 'application/json' },
+      });
+      return response.json();
+    } catch (error) {
+      throw new CustomException(HttpStatus.UNAUTHORIZED, ErrorCode.A006);
+    }
+  }
+
+  async getGithubUserEmailByAccessToken(access_token: string) {
+    try {
+      const response = await fetch(`https://api.github.com/user/emails`, {
+        headers: { Authorization: `token ${access_token}`, Accept: 'application/json' },
+      });
+      const emails = await response.json();
+      return emails[0].email;
+    } catch (error) {
+      throw new CustomException(HttpStatus.UNAUTHORIZED, ErrorCode.A006);
+    }
+  }
+
+  async validateGithubUser({ email, username }: { email: string; username: string }) {
+    try {
+      const user = await this.userService.findByEmail(email);
+
+      if (!!user) {
+        return await this.createAccessToken(user.id);
+      }
+
+      const newUser = await this.userService.createGithubUser({
+        username,
+        email,
+      });
+      return await this.createAccessToken(newUser.id);
+    } catch (error) {
+      throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.V001);
     }
   }
 }
