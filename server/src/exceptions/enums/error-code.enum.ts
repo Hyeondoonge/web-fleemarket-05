@@ -7,4 +7,9 @@ export enum ErrorCode {
   A004 = 'A004', // JWT 토큰 만료,
   A005 = 'A005', // Github Code 에러,
   A006 = 'A006', // Github Access Token 에러
+  A004 = 'A004', // JWT 토큰 만료
+  UP001 = 'UP001', // 잘못된 파일 확장자
+  UP002 = 'UP002', // 파일 용량 초과
+  UP003 = 'UP003', // 파일 개수 초과
+  UP004 = 'UP004', // S3 이미지 업로드 실패
 }
