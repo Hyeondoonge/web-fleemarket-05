@@ -36,6 +36,15 @@ class EnvironmentVariables {
   JWT_EXPIRES_IN: string;
 
   @IsString()
+  AWS_S3_REGION: string;
+
+  @IsString()
+  AWS_S3_BUCKET: string;
+
+  @IsString()
+  AWS_S3_BUCKET_PATH: string;
+  
+  @IsString()
   GITHUB_CLIENT_ID: string;
 
   @IsString()

@@ -9,4 +9,8 @@ export const ERROR_MESSAGE: Record<ErrorCode, string> = {
   [ErrorCode.A004]: '만료된 JWT 토큰입니다.',
   [ErrorCode.A005]: '유효하지않은 Github Code입니다.',
   [ErrorCode.A006]: '유효하지않은 Github Access token입니다.',
+  [ErrorCode.UP001]: '잘못된 파일 확장자입니다.',
+  [ErrorCode.UP002]: '파일 크기를 초과하였습니다.',
+  [ErrorCode.UP003]: '파일 개수를 초과하였습니다.',
+  [ErrorCode.UP004]: '업로드에 실패하였습니다.',
 };
