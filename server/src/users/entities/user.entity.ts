@@ -4,6 +4,7 @@ import { IsEmail, IsString, Length } from 'class-validator';
 import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { UUIDEntity } from 'src/common/entities';
 import { Article } from 'src/articles/entities';
+import { Region } from 'src/regions/entities';
 
 @Entity()
 export class User extends UUIDEntity {
@@ -46,4 +47,10 @@ export class User extends UUIDEntity {
   async comparePassword(plainPassword: string) {
     return await bcrypt.compare(plainPassword, this.password);
   }
+
+  @ManyToMany(() => Region)
+  @JoinTable({
+    name: 'user_has_region',
+  })
+  regions: Region[];
 }
