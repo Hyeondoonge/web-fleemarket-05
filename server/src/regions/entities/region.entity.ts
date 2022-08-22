@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { IntIDEntity } from 'src/common/entities';
+import { Article } from 'src/articles/entities';
 
 @Entity()
 export class Region extends IntIDEntity {
@@ -9,4 +10,7 @@ export class Region extends IntIDEntity {
   @Column({ length: 256 })
   @IsString()
   name: string;
+
+  @OneToMany(() => Article, (article) => article.region)
+  articles: Article[];
 }

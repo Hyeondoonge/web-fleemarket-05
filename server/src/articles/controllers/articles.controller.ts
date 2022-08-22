@@ -37,7 +37,7 @@ export class ArticlesController {
   @ApiOperation({ description: 'Article 생성 API' })
   @Post('/')
   async createArticle(@AuthUser() user: User, @Body() createArticleDto: CreateArticleDto) {
-    const newArticle = await this.articlesService.createArticle(user.id, createArticleDto);
+    const newArticle = await this.articlesService.createArticle(user, createArticleDto);
     return newArticle;
   }
 

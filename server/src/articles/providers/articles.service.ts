@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CustomException } from 'src/exceptions';
 import { ErrorCode } from 'src/exceptions/enums';
+import { RegionsService } from 'src/regions/regions.service';
 import { User } from 'src/users/entities';
 import { FindOptionsRelations, Repository } from 'typeorm';
 import {
@@ -18,7 +19,8 @@ export class ArticlesService {
   constructor(
     @InjectRepository(Article)
     private readonly articlesRepository: Repository<Article>,
-    private readonly categoryService: CategoryService
+    private readonly categoryService: CategoryService,
+    private readonly regionsService: RegionsService
   ) {}
 
   async addViewCount(articleId: number, viewCount: number) {
@@ -40,15 +42,19 @@ export class ArticlesService {
     return article;
   }
 
-  async getArticles({ page, per, category }: GetArticlesDto) {
+  async getArticles({ page, per, categoryId, regionId }: GetArticlesDto) {
     const [results, totalCount] = await this.articlesRepository.findAndCount({
       where: {
         category: {
-          id: category,
+          id: categoryId,
+        },
+        region: {
+          id: regionId,
         },
       },
       relations: {
         likeUsers: true,
+        region: true,
       },
       skip: (page - 1) * per,
       take: per,
@@ -63,6 +69,7 @@ export class ArticlesService {
   async getArticle(articleId: number) {
     const { likeUsers, ...article } = await this.findByIdOrFail(articleId, {
       likeUsers: true,
+      region: true,
     });
     await this.addViewCount(articleId, article.viewCount);
     return {
@@ -71,14 +78,23 @@ export class ArticlesService {
     };
   }
 
-  async createArticle(sellerId: string, { categoryId, ...createArticleDto }: CreateArticleDto) {
+  async createArticle(
+    seller: User,
+    { categoryId, regionId, ...createArticleDto }: CreateArticleDto
+  ) {
+    const isSameRegion = seller.regions.find(({ id }) => id === regionId);
+    if (!isSameRegion) {
+      throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.AR002);
+    }
     const category = await this.categoryService.findByIdOrFail(categoryId);
+    const region = await this.regionsService.findRegionByIdOrFail(regionId);
     const newArticle = await this.articlesRepository.save(
       this.articlesRepository.create({
         ...createArticleDto,
         category,
+        region,
         seller: {
-          id: sellerId,
+          id: seller.id,
         },
       })
     );

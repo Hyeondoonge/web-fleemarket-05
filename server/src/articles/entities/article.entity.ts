@@ -5,6 +5,7 @@ import { IntIDEntity } from 'src/common/entities';
 import { ArticleStatus } from '../enums';
 import { User } from 'src/users/entities';
 import { Category } from './category.entity';
+import { Region } from 'src/regions/entities';
 
 @Entity()
 export class Article extends IntIDEntity {
@@ -84,4 +85,7 @@ export class Article extends IntIDEntity {
 
   @ManyToMany(() => User, (user) => user.likeArticles)
   likeUsers: User[];
+
+  @ManyToOne(() => Region, (region) => region.articles, { nullable: false })
+  region: Region;
 }

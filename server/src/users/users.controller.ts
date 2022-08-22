@@ -47,6 +47,6 @@ export class UsersController {
   @ApiOkResponse({ type: UserResponse })
   @Get('/my')
   async findUser(@AuthUser() user) {
-    return await this.usersService.findByUserId(user.id);
+    return user;
   }
 }

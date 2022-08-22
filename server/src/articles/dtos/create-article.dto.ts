@@ -13,4 +13,8 @@ export class CreateArticleDto extends PickType(Article, [
   @ApiProperty({ description: '해당하는 카테고리 ID' })
   @IsInt()
   categoryId: number;
+
+  @ApiProperty({ description: '해당 지역 ID' })
+  @IsInt()
+  regionId: number;
 }
