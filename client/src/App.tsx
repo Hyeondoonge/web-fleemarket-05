@@ -1,30 +1,19 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from './styles';
+import HomePage from 'pages/HomePage';
+import SignInPage from 'pages/SignInPage';
+import { PAGE_URL } from 'constants/url.contant';
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <div>
-        <h1>우아마켓</h1>
-      </div>
-      <button
-        onClick={async () => {
-          const res = await fetch('http://localhost:4000/api/auth/github');
-          const { url } = await res.json();
-
-          console.log(url);
-          if (typeof url === 'string') {
-            window.location.href = url;
-            // window.history.pushState(null, '', url);
-          }
-        }}
-      >
-        {' '}
-        Github 로그인
-      </button>
-      <a href="http://localhost:4000/api/auth/github">깃허브 로그인!</a>
+      <Routes>
+        <Route path={PAGE_URL.HOME} element={<HomePage />} />
+        <Route path={PAGE_URL.SIGN_IN} element={<SignInPage />} />
+      </Routes>
     </ThemeProvider>
   );
 }
