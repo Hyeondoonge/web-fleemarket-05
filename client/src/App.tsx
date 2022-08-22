@@ -24,6 +24,7 @@ export default function App() {
         {' '}
         Github 로그인
       </button>
+      <a href="http://localhost:4000/api/auth/github">깃허브 로그인!</a>
     </ThemeProvider>
   );
 }

@@ -1,21 +1,18 @@
 import { CookieOptions } from 'express';
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { CustomException } from 'src/exceptions';
 import { ErrorCode } from 'src/exceptions/enums';
-import { User } from 'src/users/entities';
-import { Repository } from 'typeorm';
 import { SignInDto } from './dtos';
 import { TokenPayload } from './interfaces';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from 'src/users/users.service';
+import { CreateGithubUserDto } from 'src/users/dtos/create-github-user.dto';
+import { ProviderEnum } from 'src/users/enums';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly userService: UsersService
@@ -39,12 +36,14 @@ export class AuthService {
       userId,
       sub: 'access_token',
     };
+
     const accessToken = await this.jwtService.signAsync(payload);
     const accessTokenExpiresIn = this.configService.get<number>('JWT_EXPIRES_IN');
     const accessTokenCookieOption: CookieOptions = {
       httpOnly: true,
       maxAge: accessTokenExpiresIn,
     };
+
     return { accessToken, accessTokenCookieOption };
   }
 
@@ -107,17 +106,19 @@ export class AuthService {
     }
   }
 
-  async validateGithubUser({ email, username }: { email: string; username: string }) {
+  async validateGithubUser({ email, username, provider, providerUserId }: CreateGithubUserDto) {
     try {
-      const user = await this.userService.findByEmail(email);
+      const user = await this.userService.findByUserProvider(provider, providerUserId);
 
       if (!!user) {
         return await this.createAccessToken(user.id);
       }
 
-      const newUser = await this.userService.createGithubUser({
+      const newUser = await this.userService.createSocialUser({
         username,
         email,
+        provider: ProviderEnum.GITHUB,
+        providerUserId,
       });
       return await this.createAccessToken(newUser.id);
     } catch (error) {

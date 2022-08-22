@@ -5,7 +5,9 @@ import { ErrorCode } from 'src/exceptions/enums';
 import { Region } from 'src/regions/entities';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos';
+import { CreateGithubUserDto } from './dtos/create-github-user.dto';
 import { User } from './entities';
+import { ProviderEnum } from './enums';
 
 @Injectable()
 export class UsersService {
@@ -31,6 +33,14 @@ export class UsersService {
     return user;
   }
 
+  async findByUserProvider(provider: ProviderEnum, providerUserId: string) {
+    const user = await this.usersRepository.findOne({
+      where: { provider, providerUserId },
+    });
+
+    return user;
+  }
+
   async findUserDetailByEmail(email: string) {
     const user = await this.usersRepository.findOne({
       select: ['id', 'email', 'username', 'password'],
@@ -47,14 +57,14 @@ export class UsersService {
       throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.U001);
     }
     const newUser = await this.usersRepository.save(
-      this.usersRepository.create({ email, username, password })
+      this.usersRepository.create({ email, username, password, provider: ProviderEnum.EMAIL })
     );
     return newUser;
   }
 
-  async createGithubUser({ email, username }: { email: string; username: string }) {
+  async createSocialUser({ email, username, provider, providerUserId }: CreateGithubUserDto) {
     const newUser = await this.usersRepository.save(
-      this.usersRepository.create({ email, username })
+      this.usersRepository.create({ email, username, provider, providerUserId })
     );
     return newUser;
   }

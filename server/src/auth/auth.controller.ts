@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { SignInDto } from './dtos';
 import { ACCESS_TOKEN_COOKIE_KEY } from './constants';
 import { ConfigService } from '@nestjs/config';
+import { ProviderEnum } from 'src/users/enums';
 
 @Controller('auth')
 export class AuthController {
@@ -44,6 +45,8 @@ export class AuthController {
     const { accessToken, accessTokenCookieOption } = await this.authService.validateGithubUser({
       email,
       username,
+      provider: ProviderEnum.GITHUB,
+      providerUserId: github_user.id,
     });
 
     res.cookie(ACCESS_TOKEN_COOKIE_KEY, accessToken, accessTokenCookieOption);
