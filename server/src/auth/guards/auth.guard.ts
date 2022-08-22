@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext, Inject, HttpStatus } from '@nestjs/common';
-import { CustomException } from 'src/exceptions';
-import { ErrorCode } from 'src/exceptions/enums';
+import { CustomException } from 'src/common/exceptions';
+import { ErrorCode } from 'src/common/exceptions/enums';
 import { UsersService } from 'src/users/users.service';
 import { AuthService } from '../auth.service';
 import { ACCESS_TOKEN_COOKIE_KEY } from '../constants';

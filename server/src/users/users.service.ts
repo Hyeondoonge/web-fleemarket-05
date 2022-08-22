@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CustomException } from 'src/exceptions';
-import { ErrorCode } from 'src/exceptions/enums';
+import { CustomException } from 'src/common/exceptions';
+import { ErrorCode } from 'src/common/exceptions/enums';
 import { Region } from 'src/regions/entities';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos';

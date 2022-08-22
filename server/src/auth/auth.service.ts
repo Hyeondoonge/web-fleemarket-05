@@ -1,8 +1,8 @@
 import { CookieOptions } from 'express';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { CustomException } from 'src/exceptions';
-import { ErrorCode } from 'src/exceptions/enums';
+import { CustomException } from 'src/common/exceptions';
+import { ErrorCode } from 'src/common/exceptions/enums';
 import { SignInDto } from './dtos';
 import { TokenPayload } from './interfaces';
 import { ConfigService } from '@nestjs/config';

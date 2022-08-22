@@ -1,6 +1,6 @@
-import { ErrorCode } from './../exceptions/enums/error-code.enum';
+import { ErrorCode } from '../common/exceptions/enums/error-code.enum';
 import { HttpStatus } from '@nestjs/common';
-import { CustomException } from './../exceptions/custom.exception';
+import { CustomException } from '../common/exceptions/custom.exception';
 import { Region } from './entities/region.entity';
 import { CreateUserRegionDto } from './dtos/create-user-region.dto';
 import { InjectRepository } from '@nestjs/typeorm';

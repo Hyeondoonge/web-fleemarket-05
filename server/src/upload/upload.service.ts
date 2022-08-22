@@ -3,8 +3,8 @@ import * as S3 from 'aws-sdk/clients/s3';
 import { randomUUID } from 'crypto';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { CustomException } from 'src/exceptions';
-import { ErrorCode } from 'src/exceptions/enums';
+import { CustomException } from 'src/common/exceptions';
+import { ErrorCode } from 'src/common/exceptions/enums';
 
 @Injectable()
 export class UploadService {

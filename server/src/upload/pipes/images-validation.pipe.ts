@@ -1,6 +1,6 @@
 import { HttpStatus, ParseFilePipe } from '@nestjs/common';
-import { CustomException } from 'src/exceptions';
-import { ErrorCode } from 'src/exceptions/enums';
+import { CustomException } from 'src/common/exceptions';
+import { ErrorCode } from 'src/common/exceptions/enums';
 import { IMAGE_FILE_REGEX, IMAGE_MAX_SIZE } from '../constants';
 import { FileTypeValidator, MaxFileSizeValidator, FileCountValidator } from './validators';
 

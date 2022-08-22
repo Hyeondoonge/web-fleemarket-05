@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiBody, ApiConsumes } from '@nestjs/swagger';
-import { ExceptionResponse } from 'src/exceptions/responses';
+import { ExceptionResponse } from 'src/common/exceptions/responses';
 
 export const ApiImages = (fieldName: string) =>
   applyDecorators(

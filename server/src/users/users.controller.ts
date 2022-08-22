@@ -4,7 +4,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { ACCESS_TOKEN_COOKIE_KEY } from 'src/auth/constants';
 import { AuthUser } from 'src/auth/decorators';
 import { AuthGuard } from 'src/auth/guards';
-import { ExceptionResponse } from 'src/exceptions/responses';
+import { ExceptionResponse } from 'src/common/exceptions/responses';
 import { CreateUserDto } from './dtos';
 import { IsAvailableResponse } from './responses';
 import { UserResponse } from './responses/user.respones';
