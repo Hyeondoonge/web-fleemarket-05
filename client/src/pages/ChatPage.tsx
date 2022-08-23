@@ -1,10 +1,10 @@
 import React from 'react';
 import BottomNavigation from 'components/BottomNavigation/BottomNavigation';
 
-export default function HomePage() {
+export default function ChatPage() {
   return (
     <div>
-      Home Page
+      Chat page
       <BottomNavigation />
     </div>
   );
