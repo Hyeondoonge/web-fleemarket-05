@@ -7,7 +7,7 @@ import { Article } from 'src/articles/entities';
 @Entity()
 export class Region extends IntIDEntity {
   @ApiProperty({ description: '지역 이름' })
-  @Column({ length: 256 })
+  @Column({ length: 256, unique: true })
   @IsString()
   name: string;
 

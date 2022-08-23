@@ -7,13 +7,16 @@
   "author": "sangrimlee <contact@sangrim.dev>, Hyeondoonge <jsi06138@gmail.com>",
   "workspaces": [
     "client",
-    "server"
+    "server",
+    "migration"
   ],
   "scripts": {
     "client:dev": "yarn workspace client dev",
     "client:build": "yarn workspace client build",
     "server:dev": "yarn workspace server dev",
     "server:build": "yarn workspace server build",
+    "migration:dev": "yarn workspace migration start:dev",
+    "migration:prod": "yarn workspace migration start:prod",
     "build": "yarn client:build && yarn server:build",
     "start": "yarn workspace server start",
     "prepare": "husky install"
