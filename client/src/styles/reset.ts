@@ -211,8 +211,4 @@ export const reset = css`
     max-width: 100%;
     height: auto;
   }
-
-  svg {
-    fill: currentColor;
-  }
 `;
