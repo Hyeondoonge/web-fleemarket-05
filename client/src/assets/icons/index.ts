@@ -8,5 +8,5 @@ export { default as StoreFilledIcon } from './store-filled.svg';
 export { default as StoreOutlineIcon } from './store-outline.svg';
 export { default as UserFilledIcon } from './user-filled.svg';
 export { default as UserOutlineIcon } from './user-outline.svg';
-
+export { default as LogoIcon } from './logo.svg';
 export { default as ChevronLeftIcon } from './chevron-left.svg';

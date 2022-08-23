@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Icon from 'components/common/Icon';
+import { NAV_LIST } from 'constants/nav-list.constant';
 import * as Styled from './BottomNavigation.styled';
-import { menuList } from './nav-list.constant';
 
 export default function BottomNavigation() {
   const location = useLocation();
@@ -10,7 +10,7 @@ export default function BottomNavigation() {
   return (
     <Styled.BottomNavigationWrapper>
       <Styled.BottomNavigationList>
-        {menuList.map(({ title, icon, to }, index) => (
+        {NAV_LIST.map(({ title, icon, to }, index) => (
           <li key={index}>
             <Link to={to}>
               <Icon icon={to === location.pathname ? icon.clicked : icon.unClicked} size={24} />

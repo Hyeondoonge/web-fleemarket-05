@@ -1,13 +1,13 @@
-import { IconType } from 'components/common/Icon/Icon';
-import { PAGE_URL } from 'constants/url.contant';
+import { IconType } from 'components/common/Icon';
+import { PAGE_URL } from 'constants/url.constant';
 
-interface MenuButton {
+interface NavItem {
   icon: { clicked: IconType; unClicked: IconType };
   title: string;
   to: string;
 }
 
-export const MENU_LIST: MenuButton[] = [
+export const NAV_LIST: NavItem[] = [
   {
     icon: { clicked: 'HomeFilledIcon', unClicked: 'HomeOutlineIcon' },
     title: '홈',
