@@ -18,12 +18,17 @@ const ButtonVariantStyles = {
     --button-color: ${({ theme }) => theme.color.white};
     --button-bg-color: ${({ theme }) => theme.color.primary};
   `,
+  github: css`
+    --button-color: ${({ theme }) => theme.color.white};
+    --button-bg-color: #333333;
+  `,
 };
 
 export type ButtonSize = keyof typeof ButtonSizeStyles;
 export type ButtonVariant = keyof typeof ButtonVariantStyles;
 
 interface StyledButtonProps {
+  withIcon?: boolean;
   fullWidth?: boolean;
   rounded?: boolean;
   size: ButtonSize;
@@ -39,7 +44,17 @@ export const StyledButton = styled.button<StyledButtonProps>`
     `}
 
   ${({ fullWidth }) => fullWidth && 'width: 100%;'}
- 
+
+  ${({ withIcon }) =>
+    withIcon &&
+    css`
+      position: relative;
+      svg {
+        position: absolute;
+        left: 1.5rem;
+      }
+    `}
+
   display: flex;
   align-items: center;
   justify-content: center;

@@ -189,12 +189,6 @@ export const reset = css`
     resize: vertical;
   }
 
-  input::placeholder,
-  textarea::placeholder {
-    opacity: 1;
-    color: #999;
-  }
-
   img,
   svg,
   video,

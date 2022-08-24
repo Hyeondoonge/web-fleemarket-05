@@ -36,4 +36,10 @@ export const GlobalStyle = styled.createGlobalStyle`
       display: none;
     }
   }
+
+  input::placeholder,
+  textarea::placeholder {
+    opacity: 1;
+    color: ${({ theme }) => theme.color.grey[400]};
+  }
 `;

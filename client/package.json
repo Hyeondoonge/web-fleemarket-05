@@ -9,12 +9,15 @@
     "dev": "webpack serve"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.34.2",
     "react-is": "^18.2.0",
     "react-router-dom": "^6.3.0",
     "recoil": "^0.7.5",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",

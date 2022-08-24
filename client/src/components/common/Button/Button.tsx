@@ -7,6 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   rounded?: boolean;
   size?: ButtonSize;
   variant?: ButtonVariant;
+  withIcon?: boolean;
   css?: CSSProp;
 }
 
