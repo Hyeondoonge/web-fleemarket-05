@@ -9,6 +9,7 @@ export const BottomNavigationWrapper = styled.nav`
   bottom: 0;
   position: absolute;
   border-top: 0.5px solid ${({ theme }) => theme.color.grey[300]};
+  background-color: ${({ theme }) => theme.color.bg.front};
 `;
 
 export const BottomNavigationList = styled.ul`

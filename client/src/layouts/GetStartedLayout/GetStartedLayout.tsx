@@ -11,11 +11,11 @@ export default function GetStartedLayout({ children }: GetStartedLayoutProps) {
     <Styled.MainWrapper>
       <Styled.WelcomeWrapper>
         <Icon icon="LogoIcon" size={144} />
-        <h1>당신 근처의 무우마켓</h1>
+        <h1>우리 함께 무우마켓</h1>
         <p>
-          중고 거래부터 동네 정보까지,
+          무엇이든, 우리 함께 나누어요.
           <br />
-          지금 내 동네를 선택하고 시작해보세요!
+          지금 내 동네에서 같이 시작해보아요!
         </p>
       </Styled.WelcomeWrapper>
       {children}

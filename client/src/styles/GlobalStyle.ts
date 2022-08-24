@@ -7,7 +7,7 @@ export const GlobalStyle = styled.createGlobalStyle`
   html {
     width: 100%;
     height: 100%;
-    background-color: ${({ theme }) => theme.color.grey[200]};
+    background-color: ${({ theme }) => theme.color.bg.back};
   }
 
   body {
@@ -16,15 +16,15 @@ export const GlobalStyle = styled.createGlobalStyle`
     height: 100%;
     max-width: 28rem;
     margin: 0 auto;
-    color: ${({ theme }) => theme.color.black};
-    background-color: ${({ theme }) => theme.color.white};
+    color: ${({ theme }) => theme.color.grey[900]};
+    background-color: ${({ theme }) => theme.color.bg.front};
     overflow: hidden;
   }
 
   #root {
     height: 100%;
-    color: ${({ theme }) => theme.color.black};
-    background-color: ${({ theme }) => theme.color.white};
+    color: ${({ theme }) => theme.color.grey[900]};
+    background-color: ${({ theme }) => theme.color.bg.front};
     overflow-x: hidden;
     overflow-y: scroll;
 
