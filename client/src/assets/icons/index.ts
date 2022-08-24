@@ -12,3 +12,4 @@ export { default as ChevronLeftIcon } from './chevron-left.svg';
 export { default as SunIcon } from './sun.svg';
 export { default as MoonIcon } from './moon.svg';
 export { default as LogoIcon } from './logo.svg';
+export { default as SearchIcon } from './search.svg';

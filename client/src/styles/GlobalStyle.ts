@@ -27,6 +27,7 @@ export const GlobalStyle = styled.createGlobalStyle`
     background-color: ${({ theme }) => theme.color.bg.front};
     overflow-x: hidden;
     overflow-y: scroll;
+    position: relative;
 
     /* Hide scrollbar */
     -ms-overflow-style: none;
