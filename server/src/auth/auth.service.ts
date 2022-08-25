@@ -1,14 +1,20 @@
+import axios from 'axios';
 import { CookieOptions } from 'express';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CustomException } from 'src/common/exceptions';
 import { ErrorCode } from 'src/common/exceptions/enums';
 import { SignInDto } from './dtos';
-import { TokenPayload } from './interfaces';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from 'src/users/users.service';
 import { CreateGithubUserDto } from 'src/users/dtos/create-github-user.dto';
 import { ProviderEnum } from 'src/users/enums';
+import {
+  GithubAccessTokenResponse,
+  GithubUserEmailResponse,
+  GithubUserResponse,
+  TokenPayload,
+} from './interfaces';
 
 @Injectable()
 export class AuthService {
@@ -69,13 +75,13 @@ export class AuthService {
     const GITHUB_CLIENT_ID = this.configService.get<string>('GITHUB_CLIENT_ID');
     const GITHUB_CLIENT_SECRET = this.configService.get<string>('GITHUB_CLIENT_SECRET');
 
-    const response = await fetch(
+    const { data } = await axios.get<GithubAccessTokenResponse>(
       `https://github.com/login/oauth/access_token?client_id=${GITHUB_CLIENT_ID}&code=${code}&client_secret=${GITHUB_CLIENT_SECRET}`,
       {
         headers: { Accept: 'application/json' },
       }
     );
-    const { access_token } = await response.json();
+    const { access_token } = data;
 
     if (!access_token) {
       throw new CustomException(HttpStatus.UNAUTHORIZED, ErrorCode.A005);
@@ -85,10 +91,10 @@ export class AuthService {
 
   async getGithubUserByAccessToken(access_token: string) {
     try {
-      const response = await fetch(`https://api.github.com/user`, {
+      const { data } = await axios.get<GithubUserResponse>(`https://api.github.com/user`, {
         headers: { Authorization: `token ${access_token}`, Accept: 'application/json' },
       });
-      return response.json();
+      return data;
     } catch (error) {
       throw new CustomException(HttpStatus.UNAUTHORIZED, ErrorCode.A006);
     }
@@ -96,11 +102,14 @@ export class AuthService {
 
   async getGithubUserEmailByAccessToken(access_token: string) {
     try {
-      const response = await fetch(`https://api.github.com/user/emails`, {
-        headers: { Authorization: `token ${access_token}`, Accept: 'application/json' },
-      });
-      const emails = await response.json();
-      return emails[0].email;
+      const { data: emails } = await axios.get<GithubUserEmailResponse[]>(
+        `https://api.github.com/user/emails`,
+        {
+          headers: { Authorization: `token ${access_token}`, Accept: 'application/json' },
+        }
+      );
+      const primaryEmail = emails.find((email) => email.primary).email;
+      return primaryEmail ?? emails[0].email;
     } catch (error) {
       throw new CustomException(HttpStatus.UNAUTHORIZED, ErrorCode.A006);
     }
