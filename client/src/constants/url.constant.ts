@@ -11,3 +11,8 @@ export const PAGE_URL = {
 } as const;
 
 export const GITHUB_SIGN_IN_URL = '/api/auth/github';
+
+export const API_URL = {
+  MY_PROFILE: '/users/my',
+  EMAIL_SIGN_IN: '/auth/sign-in',
+};

@@ -1,15 +1,23 @@
 import styled, { css, CSSProp } from 'styled-components';
 
 const ButtonSizeStyles = {
+  md: css`
+    --button-text-size: 0.875rem;
+    --button-py: 0.5rem;
+    --button-px: 1rem;
+    --button-min-h: 2.375rem;
+  `,
   lg: css`
     --button-text-size: 1rem;
     --button-py: 0.75rem;
     --button-px: 1.25rem;
+    --button-min-h: 3rem;
   `,
   xl: css`
     --button-text-size: 1.125rem;
     --button-py: 0.875rem;
     --button-px: 2rem;
+    --button-min-h: 3.5rem;
   `,
 };
 
@@ -55,6 +63,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
       }
     `}
 
+  min-height: var(--button-min-h);
   display: flex;
   align-items: center;
   justify-content: center;

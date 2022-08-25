@@ -15,3 +15,4 @@ export { default as LogoIcon } from './logo.svg';
 export { default as GithubIcon } from './github.svg';
 export { default as MailIcon } from './mail.svg';
 export { default as SearchIcon } from './search.svg';
+export { default as LoadingIcon } from './loading.svg';

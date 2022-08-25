@@ -1,6 +1,6 @@
 import React from 'react';
-import SignInForm from 'components/form/SignInForm';
 import AuthLayout from 'layouts/AuthLayout';
+import SignInForm from 'components/form/EmailSignInForm';
 
 export default function EmailSignInPage() {
   return (

@@ -1,27 +1,37 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRecoilRefresher_UNSTABLE } from 'recoil';
 import Button from 'components/common/Button';
 import AuthInput from 'components/common/AuthInput';
-import { EmailLoginSchema, EMAIL_LOGIN_SCHEMA } from 'constants/schema.constant';
-import * as Styled from './SignInForm.styled';
+import useMutation from 'hooks/useMutation';
+import { requestEmailSignIn } from 'api/auth';
+import { currentUserValue } from 'recoil/selectors/user.selector';
+import { EmailSignInSchema, EMAIL_SIGN_IN_SCHEMA } from 'constants/schema.constant';
+import * as Styled from './EmailSignInForm.styled';
 
-interface SignInFormProps {
-  onSubmit?: (data: EmailLoginSchema) => void;
-}
+export default function EmailSignInForm() {
+  const login = useRecoilRefresher_UNSTABLE(currentUserValue);
+  const { mutate, isLoading } = useMutation<EmailSignInSchema>(requestEmailSignIn, {
+    onFailure: (error) => {
+      alert(error);
+    },
+    onSuccess: () => {
+      login();
+    },
+  });
 
-export default function SignInForm({ onSubmit }: SignInFormProps) {
   const {
     handleSubmit,
     register,
     formState: { isValid, isDirty, errors },
-  } = useForm<EmailLoginSchema>({
+  } = useForm<EmailSignInSchema>({
     mode: 'onChange',
-    resolver: yupResolver(EMAIL_LOGIN_SCHEMA),
+    resolver: yupResolver(EMAIL_SIGN_IN_SCHEMA),
   });
 
   return (
-    <Styled.Form onSubmit={onSubmit && handleSubmit(onSubmit)}>
+    <Styled.Form onSubmit={handleSubmit(mutate)}>
       <AuthInput
         id="email"
         type="email"
@@ -39,7 +49,7 @@ export default function SignInForm({ onSubmit }: SignInFormProps) {
         autoComplete="off"
         {...register('password')}
       />
-      <Button type="submit" size="xl" disabled={!isValid || !isDirty}>
+      <Button type="submit" size="xl" disabled={!isValid || !isDirty} isLoading={isLoading}>
         로그인
       </Button>
     </Styled.Form>
