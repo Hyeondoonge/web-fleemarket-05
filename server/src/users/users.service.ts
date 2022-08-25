@@ -46,6 +46,7 @@ export class UsersService {
       select: ['id', 'email', 'username', 'password'],
       where: {
         email,
+        provider: ProviderEnum.EMAIL,
       },
     });
     return user;
