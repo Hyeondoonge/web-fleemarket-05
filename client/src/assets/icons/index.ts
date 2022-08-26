@@ -15,5 +15,8 @@ export { default as LogoIcon } from './logo.svg';
 export { default as GithubIcon } from './github.svg';
 export { default as MailIcon } from './mail.svg';
 export { default as SearchIcon } from './search.svg';
+export { default as CloseOutlineIcon } from './close-outline.svg';
+export { default as CloseCircleOutlineIcon } from './close-circle-outline.svg';
+export { default as AddCircleIcon } from './add-circle.svg';
 export { default as LoadingIcon } from './loading.svg';
 export { default as CheckIcon } from './check.svg';

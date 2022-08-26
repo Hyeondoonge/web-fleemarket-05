@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import SignInPage from 'pages/SignInPage';
 import GetStartedPage from 'pages/GetStartedPage';
 import EmailSignInPage from 'pages/EmailSignInPage';
+
 import EmailSignUpPage from 'pages/EmailSignUpPage';
 import { PAGE_URL } from 'constants/url.constant';
 

@@ -1,11 +1,35 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Header from 'components/common/Header';
-import Icon from 'components/common/Icon';
 import * as Styled from './RegionSearchLayout.styled';
+import SearchInput from 'components/region/SearchInput';
 import { useModalContext } from 'hooks/useModalContext';
+import { Region } from 'types/Region';
+import { useInfinityScroll } from 'hooks/useInfinityScroll';
 
-export default function RegionSearchLayout() {
+interface RegionSearchLayout {
+  regions: Region[];
+  onChangeKeyword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClickResult: (e: React.MouseEvent<HTMLLIElement>) => void;
+  onIntersect: () => void;
+}
+
+export default function RegionSearchLayout({
+  regions,
+  onChangeKeyword,
+  onClickResult,
+  onIntersect,
+}: RegionSearchLayout) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const target = useRef<HTMLDivElement>(null);
   const { modalState, setModalState } = useModalContext();
+
+  const { observe } = useInfinityScroll(onIntersect);
+
+  useEffect(() => {
+    if (!target.current) return;
+    observe(target.current);
+  }, [observe]);
 
   return (
     <>
@@ -14,17 +38,29 @@ export default function RegionSearchLayout() {
           icon="ChevronLeftIcon"
           onClick={() => setModalState({ ...modalState, regionSearch: false })}
         />
-        <Styled.InputWrapper>
-          <Icon icon="SearchIcon" size={24} />
-          <Styled.SearchInput placeholder="동명(읍, 면, 동)으로 검색(ex. 서초동)" />
-        </Styled.InputWrapper>
+        <SearchInput
+          onChangeKeyword={(e) => {
+            onChangeKeyword(e);
+            ref.current?.scrollTo({ top: 0 });
+          }}
+        />
       </Header>
-      <Styled.RegionSearchLayout>
-        <Styled.ResultList>
-          <Styled.ResultItem>대구광역시 달서구 용산동</Styled.ResultItem>
-          <Styled.ResultItem>대구광역시 달서구 감삼동</Styled.ResultItem>
-          <Styled.ResultItem>대구광역시 달서구 죽전동</Styled.ResultItem>
-        </Styled.ResultList>
+      <Styled.RegionSearchLayout ref={ref}>
+        {regions.length === 0 ? (
+          <Styled.DisplayTextWrapper>
+            <p>검색 결과가 없어요.</p>
+            <p>동네 이름을 다시 확인해주세요!</p>
+          </Styled.DisplayTextWrapper>
+        ) : (
+          <Styled.ResultList>
+            {regions.map(({ id, name }) => (
+              <Styled.ResultItem key={id} onClick={onClickResult} data-id={id}>
+                {name}
+              </Styled.ResultItem>
+            ))}
+          </Styled.ResultList>
+        )}
+        <div id="observer-target" style={{ height: '5rem' }} ref={target}></div>
       </Styled.RegionSearchLayout>
     </>
   );

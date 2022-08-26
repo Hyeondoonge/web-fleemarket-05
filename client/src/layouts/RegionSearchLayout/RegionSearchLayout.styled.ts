@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 export const RegionSearchLayout = styled.div`
-  padding: 1.125rem 1rem;
+  padding: 0rem 1rem;
   background-color: ${({ theme }) => theme.color.bg.front};
+  overflow: scroll;
+  height: calc(100% - 4rem);
 `;
 
 export const SearchInput = styled.input`
@@ -19,27 +21,24 @@ export const ResultList = styled.ul`
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: 1rem;
+
+  & :not(:last-child) {
+    border-bottom: 1px solid ${({ theme }) => theme.color.grey[300]};
+  }
 `;
 
 export const ResultItem = styled.li`
-  padding: 1rem 0;
-  border-bottom: 1px solid ${({ theme }) => theme.color.grey[300]};
+  padding: 1.125rem 0;
   cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.color.primary};
+  }
 `;
 
-export const InputWrapper = styled.div`
-  flex: 1;
-  margin-left: 0.5rem;
+export const DisplayTextWrapper = styled.div`
+  margin-top: 3rem;
   display: flex;
-  align-items: center;
-
-  svg {
-    color: ${({ theme }) => theme.color.grey[500]};
-  }
-
-  :focus-within {
-    border-bottom: 1px solid ${({ theme }) => theme.color.primary};
-  }
-  border-bottom: 1px solid ${({ theme }) => theme.color.grey[300]};
+  flex-direction: column;
+  color: ${({ theme }) => theme.color.grey[500]};
 `;
