@@ -10,7 +10,7 @@ export default function GetStartedPage() {
 
   return (
     <GetStartedLayout>
-      <Button size="xl" fullWidth onClick={() => navigate(PAGE_URL.SING_UP)}>
+      <Button size="xl" fullWidth onClick={() => navigate(PAGE_URL.EMAIL_SIGN_UP)}>
         시작하기
       </Button>
       <SignInParagraph>

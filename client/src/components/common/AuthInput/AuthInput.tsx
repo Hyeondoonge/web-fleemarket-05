@@ -3,14 +3,17 @@ import * as Styled from './AuthInput.styled';
 
 interface AuthInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
+  hideErrorMessage?: boolean;
 }
 
 const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
-  ({ errorMessage, ...inputProps }, ref) => {
+  ({ errorMessage, hideErrorMessage, ...inputProps }, ref) => {
     return (
       <Styled.Wrapper>
         <Styled.Input hasError={!!errorMessage} ref={ref} {...inputProps} />
-        {errorMessage && <Styled.ErrorMessage>{errorMessage}</Styled.ErrorMessage>}
+        {!hideErrorMessage && errorMessage && (
+          <Styled.ErrorMessage>{errorMessage}</Styled.ErrorMessage>
+        )}
       </Styled.Wrapper>
     );
   }

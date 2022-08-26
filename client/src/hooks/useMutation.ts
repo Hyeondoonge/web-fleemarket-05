@@ -14,7 +14,7 @@ interface MutationState<TData> {
 }
 
 export default function useMutation<TData = any, TVariables = any>(
-  requestFunc: (variables: TVariables) => Promise<TData>,
+  requestFunc: (variables?: TVariables) => Promise<TData>,
   { onSuccess, onFailure }: useMutationOptions<TData>
 ) {
   const [state, setState] = useState<MutationState<TData>>({
@@ -24,7 +24,7 @@ export default function useMutation<TData = any, TVariables = any>(
     isLoading: false,
   });
 
-  const mutate = async (variables: TVariables) => {
+  const mutate = async (variables?: TVariables) => {
     setState({
       ...state,
       isLoading: true,

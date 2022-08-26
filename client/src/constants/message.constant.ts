@@ -2,7 +2,9 @@ import { ErrorCode } from 'types/error';
 
 export const VALIDATION_MESSAGE = {
   REQUIRED_FIELD: '필수 입력 정보입니다.',
-  WRONG_EMAIL: '이메일 주소를 정확히 입력해주세요.',
+  INVALID_EMAIL: '이메일 주소를 정확히 입력해주세요.',
+  INVALID_USERNAME: '이름은 2-40자이어야합니다.',
+  CONFIRM_PASSWORD: '비밀번호가 일치하지 않습니다.',
 };
 
 export const API_ERROR_MESSAGE: Record<ErrorCode, string> = {
