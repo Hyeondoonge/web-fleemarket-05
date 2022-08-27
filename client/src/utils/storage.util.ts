@@ -1,5 +1,6 @@
 export enum StorageKey {
   Theme = 'theme',
+  SelectedRegion = 'selectedRegion',
 }
 
 export function setThemeLocalStorage(isDarkMode: boolean) {
@@ -12,4 +13,12 @@ export function getThemeLocalStorage(defaultTheme: boolean) {
     return defaultTheme;
   }
   return Boolean(JSON.parse(isDarkMode));
+}
+
+export function setSelectedRegionLocalStorage(id: number) {
+  localStorage.setItem(StorageKey.SelectedRegion, String(id));
+}
+
+export function getSelectedRegionLocalStorage() {
+  return Number(localStorage.getItem(StorageKey.SelectedRegion));
 }

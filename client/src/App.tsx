@@ -8,16 +8,22 @@ import PendingFallback from 'components/boundary/PendingFallback';
 import RejectedFallback from 'components/boundary/RejectedFallback';
 import { GlobalStyle } from './styles';
 import { themeValue } from './recoil/selectors/theme.selector';
+import { ModalContextProvider } from 'contexts/ModalContext';
 
 export default function App() {
   const { theme } = useRecoilValue(themeValue);
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <ToggleThemeButton />
-      <AsyncBoundary rejectedFallback={<RejectedFallback />} pendingFallback={<PendingFallback />}>
-        <Router />
-      </AsyncBoundary>
+      <ModalContextProvider>
+        <GlobalStyle />
+        <ToggleThemeButton />
+        <AsyncBoundary
+          rejectedFallback={<RejectedFallback />}
+          pendingFallback={<PendingFallback />}
+        >
+          <Router />
+        </AsyncBoundary>
+      </ModalContextProvider>
     </ThemeProvider>
   );
 }

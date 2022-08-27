@@ -1,21 +1,18 @@
 import React from 'react';
+import { useRecoilState, useRecoilStateLoadable } from 'recoil';
 import RegionSearchLayout from 'layouts/RegionSearchLayout';
-import { Region } from 'types/Region';
 import { getRegionsByKeword } from 'apis/region';
 import { useModalContext } from 'hooks/useModalContext';
-import { useRecoilState, useRecoilStateLoadable } from 'recoil';
+import { useRegionValue } from 'hooks/uesRegionValue';
 import {
   regionResultsPageState,
-  regionResultsState,
   searchKeywordState,
-} from 'recoil/atoms/regionsResults.atom';
+  regionResultsState,
+} from 'recoil/atoms/region.atom';
 
-interface RegionSearchPageProps {
-  addUserRegion: (region: Region) => void;
-}
-
-export default function RegionSearchPage({ addUserRegion }: RegionSearchPageProps) {
+export default function RegionSearchPage({ backward }: { backward: boolean }) {
   const { modalState, setModalState } = useModalContext();
+  const { addUserRegion } = useRegionValue();
   const [keyword, setKeyword] = useRecoilState(searchKeywordState);
   const [page, setPage] = useRecoilState(regionResultsPageState);
 
@@ -52,6 +49,7 @@ export default function RegionSearchPage({ addUserRegion }: RegionSearchPageProp
   return (
     <RegionSearchLayout
       regions={searchResult}
+      backward={backward}
       onChangeKeyword={onChangeKeyword}
       onClickResult={onClickResult}
       onIntersect={onIntersect}

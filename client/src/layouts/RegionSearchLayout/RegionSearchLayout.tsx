@@ -8,6 +8,7 @@ import { useInfinityScroll } from 'hooks/useInfinityScroll';
 
 interface RegionSearchLayout {
   regions: Region[];
+  backward: boolean;
   onChangeKeyword: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClickResult: (e: React.MouseEvent<HTMLLIElement>) => void;
   onIntersect: () => void;
@@ -15,6 +16,7 @@ interface RegionSearchLayout {
 
 export default function RegionSearchLayout({
   regions,
+  backward,
   onChangeKeyword,
   onClickResult,
   onIntersect,
@@ -34,10 +36,12 @@ export default function RegionSearchLayout({
   return (
     <>
       <Header>
-        <Header.IconButton
-          icon="ChevronLeftIcon"
-          onClick={() => setModalState({ ...modalState, regionSearch: false })}
-        />
+        {backward && (
+          <Header.IconButton
+            icon="ChevronLeftIcon"
+            onClick={() => setModalState({ ...modalState, regionSearch: false })}
+          />
+        )}
         <SearchInput
           onChangeKeyword={(e) => {
             onChangeKeyword(e);

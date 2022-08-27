@@ -27,7 +27,7 @@ export const RegionWrapper = styled.div`
   gap: 1rem;
 `;
 
-export const Region = styled.div`
+export const Region = styled.div<{ selected?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,18 +36,19 @@ export const Region = styled.div`
   padding: 1.5rem 1rem;
   font-size: 1.125rem;
   font-weight: 500;
-
   border-radius: 0.5rem;
-  background-color: ${({ theme }) => theme.color.primary};
-  color: ${({ theme }) => theme.color.grey[900]};
+  background-color: ${({ selected, theme }) => (selected ? theme.color.primary : 'transparent')};
+  box-shadow: ${({ selected, theme }) =>
+    `inset 0 0 0 1px ${selected ? 'transparent' : theme.color.grey[400]}`};
+  color: ${({ selected, theme }) => (selected ? theme.color.grey[900] : theme.color.grey[400])};
 
-  transition: 0.3s;
+  cursor: pointer;
 `;
 
 export const AddButton = styled(Region)`
   justify-content: center;
   background-color: transparent;
-  color: ${({ theme }) => theme.color.grey[800]};
-  border: 0.5px solid ${({ theme }) => theme.color.grey[800]};
+  box-shadow: inset 0 0 0 1px ${({ theme }) => theme.color.grey[400]};
+  color: ${({ theme }) => theme.color.grey[400]};
   cursor: pointer;
 `;
