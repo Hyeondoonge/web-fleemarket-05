@@ -43,8 +43,8 @@ export class ArticlesController {
 
   @ApiOperation({ description: 'Article 가져오기 API' })
   @Get('/:id')
-  async getArticle(@Param('id') articleId: number) {
-    const article = await this.articlesService.getArticle(articleId);
+  async getArticle(@AuthUser() user: User, @Param('id') articleId: number) {
+    const article = await this.articlesService.getArticle(user.id, articleId);
     return article;
   }
 

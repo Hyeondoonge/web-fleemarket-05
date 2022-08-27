@@ -29,6 +29,9 @@ import { UploadModule } from './upload/upload.module';
         autoLoadEntities: true,
         synchronize: true,
         logging: configService.get('NODE_ENV') !== Environment.Production,
+        extra: {
+          decimalNumbers: true,
+        },
       }),
     }),
     ServeStaticModule.forRoot({

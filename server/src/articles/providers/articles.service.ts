@@ -66,15 +66,17 @@ export class ArticlesService {
     return { articles, totalCount };
   }
 
-  async getArticle(articleId: number) {
+  async getArticle(userId: string, articleId: number) {
     const { likeUsers, ...article } = await this.findByIdOrFail(articleId, {
       likeUsers: true,
       region: true,
     });
     await this.addViewCount(articleId, article.viewCount);
+    const isLike = likeUsers.some(({ id }) => id === userId);
     return {
       ...article,
       likeCount: likeUsers.length,
+      isLike,
     };
   }
 

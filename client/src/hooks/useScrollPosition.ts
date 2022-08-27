@@ -1,22 +1,31 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function useScrollPosition() {
+  const element = useRef<HTMLElement | null>(null);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
-  const rootElement = useMemo(() => {
-    return document.getElementById('root') as HTMLElement;
-  }, []);
 
   useEffect(() => {
+    element.current = document.querySelector('main.scrollable');
+
+    if (!element.current) {
+      return;
+    }
+
     const onChangeScrollPosition = () =>
       requestAnimationFrame(() => {
-        setScrollPosition(rootElement.scrollTop);
+        if (element.current) {
+          setScrollPosition(element.current.scrollTop);
+        }
       });
-    rootElement.addEventListener('scroll', onChangeScrollPosition);
+
+    element.current.addEventListener('scroll', onChangeScrollPosition);
 
     return () => {
-      rootElement.removeEventListener('scroll', onChangeScrollPosition);
+      if (element.current) {
+        element.current.removeEventListener('scroll', onChangeScrollPosition);
+      }
     };
-  }, [rootElement]);
+  }, []);
 
   return scrollPosition;
 }

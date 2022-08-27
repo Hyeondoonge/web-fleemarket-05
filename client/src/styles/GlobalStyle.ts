@@ -25,16 +25,8 @@ export const GlobalStyle = styled.createGlobalStyle`
     height: 100%;
     color: ${({ theme }) => theme.color.grey[900]};
     background-color: ${({ theme }) => theme.color.bg.front};
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
     position: relative;
-
-    /* Hide scrollbar */
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 
   input::placeholder,
