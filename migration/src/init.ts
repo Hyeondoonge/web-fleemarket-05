@@ -27,8 +27,10 @@ async function insertKoreaRegions() {
 }
 
 async function insertCategory(category: string) {
+  const [name, imgUrl] = category.split(' ');
   const newCategory = new Category();
-  newCategory.name = category;
+  newCategory.name = name;
+  newCategory.imgUrl = imgUrl;
 
   // 중복 체크
   const isUnique = !(await datasource

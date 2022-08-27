@@ -16,4 +16,12 @@ export class Category extends IntIDEntity {
 
   @OneToMany(() => Article, (article) => article.category)
   articles: Article[];
+
+  @Column({
+    type: 'varchar',
+    length: 256,
+    nullable: true,
+  })
+  @IsString()
+  imgUrl: string;
 }

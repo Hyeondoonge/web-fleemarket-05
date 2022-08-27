@@ -5,6 +5,8 @@ import * as path from 'path';
 dotenv.config({
   path: path.join(
     process.cwd(),
+    '..',
+    'server',
     `.env.${process.env.NODE_ENV === 'production' ? 'production' : 'development'}`
   ),
 });
