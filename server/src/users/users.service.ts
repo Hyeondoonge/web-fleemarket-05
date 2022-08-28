@@ -1,5 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Article } from 'src/articles/entities';
 import { CustomException } from 'src/common/exceptions';
 import { ErrorCode } from 'src/common/exceptions/enums';
 import { Region } from 'src/regions/entities';
@@ -75,5 +76,57 @@ export class UsersService {
       ...user,
       regions: newRegions,
     });
+  }
+
+  async findMyArticles(userId: string) {
+    const { articles } = await this.usersRepository.findOne({
+      where: {
+        id: userId,
+      },
+      relations: {
+        articles: {
+          region: true,
+          category: true,
+          seller: true,
+          likeUsers: true,
+        },
+      },
+      order: {
+        articles: {
+          id: 'DESC',
+        },
+      },
+    });
+    return this.addLikeCount(articles);
+  }
+
+  async findMyLikeArticles(userId: string) {
+    const { likeArticles: articles } = await this.usersRepository.findOne({
+      where: {
+        id: userId,
+      },
+      relations: {
+        likeArticles: {
+          region: true,
+          category: true,
+          seller: true,
+          likeUsers: true,
+        },
+      },
+      order: {
+        likeArticles: {
+          id: 'DESC',
+        },
+      },
+    });
+
+    return this.addLikeCount(articles);
+  }
+
+  addLikeCount(articles: Article[]) {
+    return articles.map(({ likeUsers, ...article }) => ({
+      ...article,
+      likeCount: likeUsers.length,
+    }));
   }
 }

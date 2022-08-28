@@ -1,18 +1,19 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PagintaionDto } from 'src/common/dtos';
 import { CustomException } from 'src/common/exceptions';
 import { ErrorCode } from 'src/common/exceptions/enums';
 import { RegionsService } from 'src/regions/regions.service';
 import { User } from 'src/users/entities';
-import { FindOptionsRelations, Repository } from 'typeorm';
+import { Article } from '../entities';
+import { CategoryService } from './category.service';
+import { FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
 import {
   CreateArticleDto,
   GetArticlesDto,
   UpdateArticleDto,
   UpdateArticleStatusDto,
 } from '../dtos';
-import { Article } from '../entities';
-import { CategoryService } from './category.service';
 
 @Injectable()
 export class ArticlesService {
@@ -42,28 +43,42 @@ export class ArticlesService {
     return article;
   }
 
-  async getArticles({ page, per, categoryId, regionId }: GetArticlesDto) {
+  async getArticlesWithPagination(
+    { page, per }: PagintaionDto,
+    whereOptions: FindOptionsWhere<Article> | FindOptionsWhere<Article>[]
+  ) {
     const [results, totalCount] = await this.articlesRepository.findAndCount({
-      where: {
-        category: {
-          id: categoryId,
-        },
-        region: {
-          id: regionId,
-        },
-      },
+      where: whereOptions,
       relations: {
         likeUsers: true,
         region: true,
       },
       skip: (page - 1) * per,
       take: per,
+      order: {
+        id: 'DESC',
+      },
     });
     const articles = results.map(({ likeUsers, ...results }) => ({
       ...results,
       likeCount: likeUsers.length,
     }));
     return { articles, totalCount };
+  }
+
+  async getArticles({ page, per, categoryId, regionId }: GetArticlesDto) {
+    const articles = await this.getArticlesWithPagination(
+      { page, per },
+      {
+        category: {
+          id: categoryId,
+        },
+        region: {
+          id: regionId,
+        },
+      }
+    );
+    return articles;
   }
 
   async getArticle(userId: string, articleId: number) {

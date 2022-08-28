@@ -6,6 +6,7 @@ import { AuthUser } from 'src/auth/decorators';
 import { AuthGuard } from 'src/auth/guards';
 import { ExceptionResponse } from 'src/common/exceptions/responses';
 import { CreateUserDto } from './dtos';
+import { User } from './entities';
 import { IsAvailableResponse } from './responses';
 import { UserResponse } from './responses/user.respones';
 import { UsersService } from './users.service';
@@ -48,5 +49,21 @@ export class UsersController {
   @Get('/my')
   async findUser(@AuthUser() user) {
     return user;
+  }
+
+  @UseGuards(AuthGuard)
+  @ApiOperation({ description: '사용자 판매글 조회 API' })
+  @Get('/my/articles')
+  async findMyAritcles(@AuthUser() user: User) {
+    const articles = await this.usersService.findMyArticles(user.id);
+    return articles;
+  }
+
+  @UseGuards(AuthGuard)
+  @ApiOperation({ description: '사용자 관심글 조회 API' })
+  @Get('/my/likes')
+  async findMyLikeArticles(@AuthUser() user: User) {
+    const articles = await this.usersService.findMyLikeArticles(user.id);
+    return articles;
   }
 }

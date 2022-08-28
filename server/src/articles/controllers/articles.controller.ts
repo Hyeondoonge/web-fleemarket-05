@@ -79,7 +79,7 @@ export class ArticlesController {
   async likeArticles(@AuthUser() user: User, @Param('id') articleId: number) {
     await this.articlesService.likeArticle(user, articleId);
     return {
-      user,
+      status: true,
     };
   }
 
@@ -88,7 +88,7 @@ export class ArticlesController {
   async dislikeArticle(@AuthUser() user: User, @Param('id') articleId: number) {
     await this.articlesService.dislikeArticle(user, articleId);
     return {
-      user,
+      status: true,
     };
   }
 }
