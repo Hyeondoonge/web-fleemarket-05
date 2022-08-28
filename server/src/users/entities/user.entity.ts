@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsString, Length } from 'class-validator';
 import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { UUIDEntity } from 'src/common/entities';
-import { Article } from 'src/articles/entities';
+import { Article, UserViewArticle } from 'src/articles/entities';
 import { Region } from 'src/regions/entities';
 import { ProviderEnum } from 'src/users/enums';
 
@@ -68,4 +68,7 @@ export class User extends UUIDEntity {
   @Column()
   @IsEnum(ProviderEnum)
   provider: ProviderEnum;
+
+  @OneToMany(() => UserViewArticle, (userViewArticle) => userViewArticle.user)
+  viewArticles: UserViewArticle[];
 }

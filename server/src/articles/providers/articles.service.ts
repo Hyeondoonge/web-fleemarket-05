@@ -5,7 +5,7 @@ import { CustomException } from 'src/common/exceptions';
 import { ErrorCode } from 'src/common/exceptions/enums';
 import { RegionsService } from 'src/regions/regions.service';
 import { User } from 'src/users/entities';
-import { Article } from '../entities';
+import { Article, UserViewArticle } from '../entities';
 import { CategoryService } from './category.service';
 import { FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
 import {
@@ -20,6 +20,8 @@ export class ArticlesService {
   constructor(
     @InjectRepository(Article)
     private readonly articlesRepository: Repository<Article>,
+    @InjectRepository(UserViewArticle)
+    private readonly userViewArticleRepository: Repository<UserViewArticle>,
     private readonly categoryService: CategoryService,
     private readonly regionsService: RegionsService
   ) {}
@@ -86,8 +88,16 @@ export class ArticlesService {
       likeUsers: true,
       region: true,
     });
-    await this.addViewCount(articleId, article.viewCount);
+
+    const isUserViewArticle = await this.findUserViewArticle(userId, articleId);
+
+    if (!isUserViewArticle) {
+      await this.addViewCount(articleId, article.viewCount);
+      await this.createUserViewArticle(userId, articleId);
+    }
+
     const isLike = likeUsers.some(({ id }) => id === userId);
+
     return {
       ...article,
       likeCount: likeUsers.length,
@@ -168,5 +178,31 @@ export class ArticlesService {
     });
     article.likeUsers = article.likeUsers.filter((likeUser) => likeUser.id !== user.id);
     await this.articlesRepository.save(article);
+  }
+
+  async findUserViewArticle(userId: string, articleId: number) {
+    const isUserViewArticle = await this.userViewArticleRepository.findOneBy({
+      user: {
+        id: userId,
+      },
+      article: {
+        id: articleId,
+      },
+    });
+
+    return isUserViewArticle;
+  }
+
+  async createUserViewArticle(userId: string, articleId: number) {
+    await this.userViewArticleRepository.save(
+      this.userViewArticleRepository.create({
+        user: {
+          id: userId,
+        },
+        article: {
+          id: articleId,
+        },
+      })
+    );
   }
 }

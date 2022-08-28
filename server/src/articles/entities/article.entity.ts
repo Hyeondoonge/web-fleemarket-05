@@ -1,11 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsBoolean, IsEnum, IsInt, IsString, Max, MaxLength, Min } from 'class-validator';
-import { Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { IntIDEntity } from 'src/common/entities';
 import { ArticleStatus } from '../enums';
 import { User } from 'src/users/entities';
 import { Category } from './category.entity';
 import { Region } from 'src/regions/entities';
+import { UserViewArticle } from './user-view-article.entity';
 
 @Entity()
 export class Article extends IntIDEntity {
@@ -88,4 +89,7 @@ export class Article extends IntIDEntity {
 
   @ManyToOne(() => Region, (region) => region.articles, { nullable: false })
   region: Region;
+
+  @OneToMany(() => UserViewArticle, (userViewArticle) => userViewArticle.article)
+  viewUsers: UserViewArticle[];
 }
