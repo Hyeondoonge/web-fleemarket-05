@@ -1,3 +1,6 @@
+import { GetArticlesParam } from 'types/param';
+import { getURLParams } from 'utils/api.util';
+
 export const PAGE_URL = {
   HOME: '/',
   GET_STARTED: '/get-started',
@@ -18,6 +21,7 @@ export const API_URL = {
   MY_PROFILE: '/users/my',
   EMAIL_SIGN_IN: '/auth/sign-in',
   EMAIL_SIGN_UP: '/users',
+  ARTICLES: (getArticlesParam: GetArticlesParam) => `/articles?${getURLParams(getArticlesParam)}`,
   IS_EMAIL_AVAILABLE: (email: string) => `/users/available/email?email=${email}`,
   GET_ARTICLE_BY_ID: (id: string | number) => `/articles/${id}`,
   LIKE_ARTICLE: (id: string | number) => `/articles/${id}/like`,

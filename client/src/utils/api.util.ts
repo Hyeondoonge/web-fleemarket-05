@@ -32,3 +32,13 @@ export async function mutation<TBody = any, TData = any>(config: AxiosRequestCon
     throw new Error(handleError(error));
   }
 }
+
+export function getURLParams(params: any) {
+  const newParams: { [key: string]: string } = {};
+
+  for (const key in params) {
+    if (params[key]) newParams[key] = params[key];
+  }
+
+  return new URLSearchParams(newParams);
+}

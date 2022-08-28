@@ -10,6 +10,7 @@ import { userRegion } from 'recoil/atoms/region.atom';
 import { currentUserState } from 'recoil/atoms/user.atom';
 import { setSelectedRegionLocalStorage } from 'utils/storage.util';
 import { useRegionValue } from 'hooks/uesRegionValue';
+import { shortRegion } from 'utils/region.util';
 
 export default function RegionSelectLayout() {
   const { deleteUserRegion } = useRegionValue();
@@ -43,7 +44,7 @@ export default function RegionSelectLayout() {
               onClick={() => onClickRegion(id)}
               selected={id === selectedRegion}
             >
-              {name.split(' ')[2]}
+              {shortRegion(name)}
               <button onClick={() => deleteUserRegion(id)}>
                 <Icon icon="CloseCircleOutlineIcon" size={20} />
               </button>

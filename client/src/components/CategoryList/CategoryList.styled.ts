@@ -6,7 +6,7 @@ export const CategoryList = styled.ul`
   flex-wrap: wrap;
 `;
 
-export const CategoryItem = styled.li`
+export const CategoryItem = styled.li<{ $selected: boolean }>`
   width: 7rem;
   height: 8rem;
   display: flex;
@@ -16,6 +16,7 @@ export const CategoryItem = styled.li`
   row-gap: 1.125rem;
   font-size: 0.875rem;
   margin: 0.5rem 1rem;
+  border-radius: 0.5rem;
 
   img {
     width: 4rem;
@@ -23,9 +24,11 @@ export const CategoryItem = styled.li`
   }
 
   &:hover {
-    border-radius: 0.5rem;
     background-color: ${({ theme }) => theme.color.grey[200]};
   }
+
+  background-color: ${({ $selected, theme }) =>
+    $selected ? theme.color.grey[200] : 'transparent'};
 
   cursor: pointer;
 `;

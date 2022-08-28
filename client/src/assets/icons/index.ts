@@ -22,3 +22,4 @@ export { default as AddCircleIcon } from './add-circle.svg';
 export { default as LoadingIcon } from './loading.svg';
 export { default as CheckIcon } from './check.svg';
 export { default as OptionIcon } from './option.svg';
+export { default as MenuIcon } from './menu.svg';
