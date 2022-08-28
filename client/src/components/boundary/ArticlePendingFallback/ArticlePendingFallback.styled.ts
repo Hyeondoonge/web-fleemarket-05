@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { getRandomValue } from 'utils/random.util';
 
 const skeletonAnimation = (start: number, end: number) => keyframes`
   from {
@@ -14,10 +15,6 @@ const skeletonAnimation = (start: number, end: number) => keyframes`
     opacity: 0.95;
   }
 `;
-
-const getRandomValue = (max: number, min: number) => {
-  return Math.random() * (max - min) + min;
-};
 
 const createRandomSkeletonAnimation = () => {
   const start = getRandomValue(0.3, 0.7);

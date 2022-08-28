@@ -12,7 +12,10 @@ export const PAGE_URL = {
   MY_ARTICLES: '/mypage/articles',
   MY_CHATS: '/chats',
   ARTICLE: '/articles/:id',
-  ARTICLE_BY_ID: (id: string) => `/articles/${id}`,
+  ARTICLE_BY_ID: (id: string | number) => `/articles/${id}`,
+  WRITE_ARTICLE: '/write',
+  EDIT_ARITCLE: '/edit/:id',
+  EDIT_ARTICLE_BY_ID: (id: string | number) => `/edit/${id}`,
 } as const;
 
 export const GITHUB_SIGN_IN_URL = '/api/auth/github';
@@ -21,10 +24,15 @@ export const API_URL = {
   MY_PROFILE: '/users/my',
   EMAIL_SIGN_IN: '/auth/sign-in',
   EMAIL_SIGN_UP: '/users',
+  SIGN_OUT: '/auth/sign-out',
   ARTICLES: (getArticlesParam: GetArticlesParam) => `/articles?${getURLParams(getArticlesParam)}`,
   IS_EMAIL_AVAILABLE: (email: string) => `/users/available/email?email=${email}`,
   GET_ARTICLE_BY_ID: (id: string | number) => `/articles/${id}`,
   LIKE_ARTICLE: (id: string | number) => `/articles/${id}/like`,
   DISLIKE_ARTICLE: (id: string | number) => `/articles/${id}/dislike`,
   CHANGE_ARITLCE_STATUS: (id: string | number) => `/articles/${id}/status`,
+  CREATE_ARTICLE: '/articles',
+  EDIT_ARTICLE: (id: string | number) => `/articles/${id}`,
+  UPLOAD_IMAGE: '/upload/image',
+  UPLOAD_IMAGES: '/upload/images',
 };

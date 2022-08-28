@@ -7,7 +7,7 @@ export class CustomException extends HttpException {
     super(
       {
         errorCode,
-        messsage: message ?? ERROR_MESSAGE[errorCode],
+        message: message ?? ERROR_MESSAGE[errorCode],
       },
       statusCode
     );

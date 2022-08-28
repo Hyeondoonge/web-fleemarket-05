@@ -12,8 +12,8 @@ export default function ArticleItem({
   article: Article;
 }) {
   return (
-    <Link key={id} to={`/articles/${id}`}>
-      <Styled.ArticleItem>
+    <Styled.ArticleItem>
+      <Link key={id} to={`/articles/${id}`}>
         <Styled.Thumbnail src={thumbnail} />
         <Styled.Content>
           <Styled.Title>{title}</Styled.Title>
@@ -26,7 +26,7 @@ export default function ArticleItem({
             {likeCount}
           </Styled.Like>
         </Styled.Content>
-      </Styled.ArticleItem>
-    </Link>
+      </Link>
+    </Styled.ArticleItem>
   );
 }

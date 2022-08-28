@@ -1,6 +1,6 @@
 import { useRecoilValueLoadable } from 'recoil';
 import { categoriesValue } from 'recoil/selectors/categories.selector';
-import { Category } from 'types/Category';
+import { Category } from 'types/category';
 
 export function useCategoryValue() {
   const { state, contents } = useRecoilValueLoadable<Category[]>(categoriesValue);

@@ -29,7 +29,14 @@ export default function ArticleDescription() {
         {' ∙ '}
         {elapsedTime(article.createdAt)}
       </Styled.CategoryWrapper>
-      <Styled.Content>{article.content}</Styled.Content>
+      <Styled.Content>
+        {article.content.split('\n').map((paragraph, i) => (
+          <React.Fragment key={i}>
+            {paragraph}
+            <br />
+          </React.Fragment>
+        ))}
+      </Styled.Content>
       <Styled.CategoryWrapper>
         조회 {article.viewCount}
         {' ∙ '}

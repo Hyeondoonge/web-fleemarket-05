@@ -21,5 +21,7 @@ export { default as CloseCircleOutlineIcon } from './close-circle-outline.svg';
 export { default as AddCircleIcon } from './add-circle.svg';
 export { default as LoadingIcon } from './loading.svg';
 export { default as CheckIcon } from './check.svg';
+export { default as CameraIcon } from './camera.svg';
 export { default as OptionIcon } from './option.svg';
 export { default as MenuIcon } from './menu.svg';
+export { default as AddIcon } from './add.svg';

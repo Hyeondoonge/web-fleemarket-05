@@ -5,12 +5,15 @@ import Scrollable from 'components/common/Scrollable';
 import Icon from 'components/common/Icon';
 import Dropdown from 'components/common/Dropdown';
 import { DropdownButton, DropdownMenus, DropdownMenu } from './ArticleLayout.styled';
+import { useNavigate } from 'react-router-dom';
+import { PAGE_URL } from 'constants/url.constant';
 
 interface AritcleLayoutProps {
   children?: React.ReactNode;
 }
 
 export default function ArticleLayout({ children }: AritcleLayoutProps) {
+  const navigate = useNavigate();
   const { article, isMyArticle } = useArticleQuery();
 
   return (
@@ -27,7 +30,9 @@ export default function ArticleLayout({ children }: AritcleLayoutProps) {
                 <Icon icon="OptionIcon" size={24} />
               </DropdownButton>
               <DropdownMenus>
-                <DropdownMenu>게시글 수정</DropdownMenu>
+                <DropdownMenu onClick={() => navigate(PAGE_URL.EDIT_ARTICLE_BY_ID(article.id))}>
+                  게시글 수정
+                </DropdownMenu>
                 <DropdownMenu $isDelete>삭제</DropdownMenu>
               </DropdownMenus>
             </Dropdown>

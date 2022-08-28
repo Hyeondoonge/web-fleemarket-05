@@ -103,6 +103,7 @@ export const reset = css`
     color: inherit;
     margin: 0;
     padding: 0;
+    border-radius: 0;
   }
 
   button,

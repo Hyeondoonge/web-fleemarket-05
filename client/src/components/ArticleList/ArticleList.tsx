@@ -25,7 +25,7 @@ export default function ArticleList() {
 
     const param: GetArticlesParam = { regionId, page: page + 1, per: 5 };
 
-    if (selectedCategory !== null) param.categoryId = selectedCategory.id;
+    if (selectedCategory !== null) param.categoryId = selectedCategory.id.toString();
 
     const data = await requestGetArticles(param);
     setArticles({

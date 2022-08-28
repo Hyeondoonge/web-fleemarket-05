@@ -9,16 +9,18 @@ import { requestChangeArticleStatus } from 'api/article';
 import useMutation from 'hooks/useMutation';
 
 export default function ArticleStatusDropdown() {
-  const { article, changeArticleStatus } = useArticleQuery();
+  const { article, refresh } = useArticleQuery();
   const { isLoading, mutate } = useMutation(requestChangeArticleStatus(article.id), {
     onFailure: () => {
       alert('상품 상태 변경에 실패하였습니다.');
     },
+    onSuccess: () => {
+      refresh();
+    },
   });
 
-  const onChangeArticleStatus = (status: ArticleStatus) => () => {
-    mutate(status);
-    changeArticleStatus(status);
+  const onChangeArticleStatus = (status: ArticleStatus) => async () => {
+    await mutate(status);
   };
 
   return (

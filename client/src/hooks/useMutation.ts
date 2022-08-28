@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 
-interface useMutationOptions<TData> {
+interface useMutationOptions<TData, TVariables> {
   onSuccess?: (data: TData) => void;
   onFailure?: (error: string) => void;
+  onMutate?: (variables: TVariables) => void;
 }
 
 interface MutationState<TData> {
@@ -14,8 +15,8 @@ interface MutationState<TData> {
 }
 
 export default function useMutation<TData = any, TVariables = any>(
-  requestFunc: (variables?: TVariables) => Promise<TData>,
-  { onSuccess, onFailure }: useMutationOptions<TData>
+  requestFunc: (variables: TVariables) => Promise<TData>,
+  { onMutate, onSuccess, onFailure }: useMutationOptions<TData, TVariables>
 ) {
   const [state, setState] = useState<MutationState<TData>>({
     data: null,
@@ -24,7 +25,9 @@ export default function useMutation<TData = any, TVariables = any>(
     isLoading: false,
   });
 
-  const mutate = async (variables?: TVariables) => {
+  const mutate = async (variables: TVariables) => {
+    let success = true;
+    onMutate && onMutate(variables);
     setState({
       ...state,
       isLoading: true,
@@ -44,12 +47,14 @@ export default function useMutation<TData = any, TVariables = any>(
         error: errorMessage,
       });
       onFailure && onFailure(errorMessage);
+      success = false;
     } finally {
       setState({
         ...state,
         isLoading: false,
       });
     }
+    return success;
   };
 
   return {

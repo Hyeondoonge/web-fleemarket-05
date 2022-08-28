@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { currentUserState } from 'recoil/atoms/user.atom';
 import { currentArticleState } from 'recoil/atoms/article.atom';
-import { ArticleStatus } from 'types/article';
+import { requestGetArticle } from 'api/article';
 
 export default function useArticleQuery() {
   const { id } = useParams();
@@ -11,13 +11,10 @@ export default function useArticleQuery() {
   const { user } = useRecoilValue(currentUserState);
   const isMyArticle = useMemo(() => user?.id === article.seller.id, [article, user]);
 
-  const toggleLikeOrDislikeArticle = () => {
-    setArticle({ ...article, isLike: !article.isLike });
+  const refresh = async () => {
+    const newArticle = await requestGetArticle(article.id);
+    setArticle(newArticle);
   };
 
-  const changeArticleStatus = (status: ArticleStatus) => {
-    setArticle({ ...article, status });
-  };
-
-  return { article, isMyArticle, toggleLikeOrDislikeArticle, changeArticleStatus };
+  return { article, isMyArticle, refresh };
 }

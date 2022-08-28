@@ -1,21 +1,29 @@
 import styled from 'styled-components';
 
 export const ArticleItem = styled.li`
-  position: relative;
-  display: flex;
-  gap: 1rem;
-  height: 11rem;
-  border-bottom: 1px solid ${({ theme }) => theme.color.grey[100]};
-  padding: 1.5rem 0;
-  cursor: pointer;
+  border-bottom: 1px solid ${({ theme }) => theme.color.grey[200]};
+
+  :last-child {
+    border-bottom-width: 0;
+  }
+
+  & > a {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    height: 11rem;
+    padding: 1.5rem 0;
+    cursor: pointer;
+  }
 `;
 
 export const Thumbnail = styled.img`
   aspect-ratio: 1 / 1;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.color.grey[100]};
+  box-shadow: 0 0 0 1px ${({ theme }) => theme.color.grey[200]};
 `;
+
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,6 +32,11 @@ export const Content = styled.div`
 
 export const Title = styled.h2`
   font-size: 1.125rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  padding-right: 1rem;
 `;
 
 export const MoreInfo = styled.div`

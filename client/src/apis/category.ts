@@ -1,4 +1,4 @@
-import { Category } from 'types/Category';
+import { Category } from 'types/category';
 
 export async function getCategories(): Promise<Category[]> {
   return new Promise((resolve) => {

@@ -1,8 +1,8 @@
 import React from 'react';
-import { useModalContext } from 'hooks/useModalContext';
 import { useRecoilState } from 'recoil';
 import { selectedCategoryState } from 'recoil/atoms/categories.atom';
-import { Category } from 'types/Category';
+import { Category } from 'types/category';
+import { useModalContext } from 'hooks/useModalContext';
 import * as Styled from './CategoryList.styled';
 
 interface CategoryListProps {

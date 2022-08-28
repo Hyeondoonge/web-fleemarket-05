@@ -7,8 +7,8 @@ import { API_ERROR_MESSAGE } from 'constants/message.constant';
 export function handleError(error: any) {
   let errorCode;
   if (axios.isAxiosError(error)) {
-    const errorData = error.response?.data as ErrorResponse;
-    errorCode = errorData.errorCode ?? ErrorCode.UNKNOWN;
+    const errorData = error.response?.data as ErrorResponse | undefined;
+    errorCode = errorData?.errorCode ?? ErrorCode.UNKNOWN;
   } else {
     errorCode = ErrorCode.UNKNOWN;
   }

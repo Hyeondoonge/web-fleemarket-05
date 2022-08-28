@@ -6,7 +6,9 @@
   "main": "./src/index.tsx",
   "scripts": {
     "build": "NODE_ENV='production' webpack",
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.7",

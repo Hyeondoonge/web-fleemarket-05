@@ -7,13 +7,13 @@ import { requestLikeorDislikeArticle } from 'api/article';
 import * as Styled from './ArticleFooter.styled';
 
 export default function ArticleFooter() {
-  const { article, toggleLikeOrDislikeArticle } = useArticleQuery();
+  const { article, refresh } = useArticleQuery();
   const { isLoading, mutate } = useMutation(requestLikeorDislikeArticle, {
     onFailure: () => {
       alert('요청에 실패하였습니다.');
     },
     onSuccess: () => {
-      toggleLikeOrDislikeArticle();
+      refresh();
     },
   });
 
