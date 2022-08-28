@@ -35,4 +35,5 @@ export const API_URL = {
   EDIT_ARTICLE: (id: string | number) => `/articles/${id}`,
   UPLOAD_IMAGE: '/upload/image',
   UPLOAD_IMAGES: '/upload/images',
+  MY_ARTICLES: '/users/my/articles',
 };

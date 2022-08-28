@@ -1,4 +1,4 @@
-import { requestMyProfile } from 'api/user';
+import { requestMyArticles, requestMyProfile } from 'api/user';
 import { selector } from 'recoil';
 
 export const currentUserValue = selector({
@@ -16,5 +16,13 @@ export const currentUserValue = selector({
         isLoggedIn: false,
       };
     }
+  },
+});
+
+export const myArticleListQuery = selector({
+  key: 'myArticleListValue',
+  get: async () => {
+    const myArticles = await requestMyArticles();
+    return myArticles;
   },
 });
