@@ -7,6 +7,7 @@ import { User } from 'src/users/entities';
 import { Category } from './category.entity';
 import { Region } from 'src/regions/entities';
 import { UserViewArticle } from './user-view-article.entity';
+import { Chat } from 'src/chats/entities';
 
 @Entity()
 export class Article extends IntIDEntity {
@@ -92,4 +93,7 @@ export class Article extends IntIDEntity {
 
   @OneToMany(() => UserViewArticle, (userViewArticle) => userViewArticle.article)
   viewUsers: UserViewArticle[];
+
+  @OneToMany(() => Chat, (chat) => chat.article)
+  chats: Chat[];
 }

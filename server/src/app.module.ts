@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { RegionsModule } from './regions/regions.module';
 import { ArticlesModule } from './articles/articles.module';
 import { UploadModule } from './upload/upload.module';
+import { ChatsModule } from './chats/chats.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { UploadModule } from './upload/upload.module';
     RegionsModule,
     ArticlesModule,
     UploadModule,
+    ChatsModule,
   ],
   providers: [],
 })

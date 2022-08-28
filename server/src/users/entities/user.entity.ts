@@ -6,6 +6,7 @@ import { UUIDEntity } from 'src/common/entities';
 import { Article, UserViewArticle } from 'src/articles/entities';
 import { Region } from 'src/regions/entities';
 import { ProviderEnum } from 'src/users/enums';
+import { Chat, Message } from 'src/chats/entities';
 
 @Entity()
 export class User extends UUIDEntity {
@@ -71,4 +72,10 @@ export class User extends UUIDEntity {
 
   @OneToMany(() => UserViewArticle, (userViewArticle) => userViewArticle.user)
   viewArticles: UserViewArticle[];
+
+  @OneToMany(() => Chat, (chat) => chat.buyer)
+  chats: Chat[];
+
+  @OneToMany(() => Message, (message) => message.sender)
+  sendMessages: Message[];
 }
