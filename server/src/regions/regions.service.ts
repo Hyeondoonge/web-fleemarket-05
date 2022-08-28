@@ -69,8 +69,8 @@ export class RegionsService {
       skip: (page - 1) * per,
       take: per,
     };
-    const regions = await this.regionRepository.find(findOptions);
+    const [results, totalCount] = await this.regionRepository.findAndCount(findOptions);
 
-    return regions;
+    return { regions: results, totalCount };
   }
 }

@@ -7,22 +7,26 @@ import { userRegion } from 'recoil/atoms/region.atom';
 
 export const articlesState = atom<{ articles: Article[]; totalCount: number }>({
   key: 'articlesState',
-  default: selector<{ articles: Article[]; totalCount: number }>({
-    key: 'newArticlesValue',
-    get: async ({ get }) => {
-      const page = get(articlesPageState);
-      const category = get(selectedCategoryState);
-      const regionId = get(userRegion).selectedRegion;
+  default: {
+    articles: [],
+    totalCount: 0,
+  },
+});
 
-      if (!regionId) return;
+export const articlesQuery = selector<{ articles: Article[]; totalCount: number }>({
+  key: 'newArticlesQuery',
+  get: async ({ get }) => {
+    const page = get(articlesPageState);
+    const category = get(selectedCategoryState);
+    const regionId = get(userRegion).selectedRegion;
+    if (!regionId) return;
 
-      const param: GetArticlesParam = { regionId, page, per: 5 };
-      if (category !== null) param.categoryId = category.id;
-      const data = await requestGetArticles(param);
+    const param: GetArticlesParam = { regionId, page, per: 15 };
+    if (category !== null) param.categoryId = category.id;
+    const data = await requestGetArticles(param);
 
-      return data;
-    },
-  }),
+    return data;
+  },
 });
 
 export const articlesPageState = atom<number>({

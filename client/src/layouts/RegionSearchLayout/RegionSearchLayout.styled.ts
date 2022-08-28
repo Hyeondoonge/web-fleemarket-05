@@ -3,8 +3,6 @@ import styled from 'styled-components';
 export const RegionSearchLayout = styled.div`
   padding: 0rem 1rem;
   background-color: ${({ theme }) => theme.color.bg.front};
-  overflow: scroll;
-  height: calc(100% - 4rem);
 `;
 
 export const SearchInput = styled.input`

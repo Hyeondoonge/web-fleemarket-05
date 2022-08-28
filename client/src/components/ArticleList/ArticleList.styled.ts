@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const ArticleListLayout = styled.div`
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: calc(100% - 7.5rem);
-`;
-
 export const ArticleList = styled.ul`
   padding: 0 1rem;
 `;

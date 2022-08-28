@@ -29,9 +29,16 @@ export const DropdownMenu = styled(Dropdown.Menu)`
   padding: 0.625rem;
   text-align: left;
   transition: opacity 0.2s ease-in;
+  color: ${({ theme }) => theme.color.grey[600]};
 
   &:hover {
     opacity: 0.75;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    font-weight: 700;
+    color: ${({ theme }) => theme.color.grey[900]};
   }
 `;
 

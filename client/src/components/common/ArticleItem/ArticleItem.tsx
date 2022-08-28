@@ -1,3 +1,4 @@
+import { ARTICLE_STATUS } from 'constants/article-status.constant';
 import React from 'react';
 import { PAGE_URL } from 'constants/url.constant';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,7 +12,8 @@ import Icon from '../Icon';
 import * as Styled from './ArticleItem.styled';
 
 export default function ArticleItem({
-  article: { id, title, region, price, thumbnail, createdAt, likeCount, seller },
+  article: { id, title, region, price, thumbnail, createdAt, likeCount, status, seller },
+
 }: {
   article: Article;
 }) {
@@ -29,12 +31,17 @@ export default function ArticleItem({
           <Styled.MoreInfo>
             {shortRegion(region.name)} ∙ {elapsedTime(createdAt)}
           </Styled.MoreInfo>
-          <Styled.Price>{price.toLocaleString()}원</Styled.Price>
-          <Styled.Like>
-            <Icon icon="HeartOutlineIcon" />
-            {likeCount}
-          </Styled.Like>
+          <Styled.PriceInfo>
+            {ARTICLE_STATUS[status] !== ARTICLE_STATUS.Sale && (
+              <Styled.Status $status={status}>{ARTICLE_STATUS[status]}</Styled.Status>
+            )}
+            <Styled.Price>{price === 0 ? '나눔' : `${price.toLocaleString()}원`}</Styled.Price>
+          </Styled.PriceInfo>
         </Styled.Content>
+        <Styled.Like>
+          <Icon icon="HeartOutlineIcon" />
+          {likeCount}
+        </Styled.Like>
       </Link>
       {isMyArticle && (
         <Styled.DropdownWrapper>

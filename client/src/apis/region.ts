@@ -8,9 +8,9 @@ export async function getRegionsByKeword({
   keyword: string;
   per: number;
   page: number;
-}): Promise<Region[]> {
+}): Promise<{ regions: Region[]; totalCount: number }> {
   const res = await fetch(`/api/regions/search?keyword=${keyword}&per=${per}&page=${page}`);
-  return (await res.json()).regions;
+  return await res.json();
 }
 
 export async function postRegion(id: number) {

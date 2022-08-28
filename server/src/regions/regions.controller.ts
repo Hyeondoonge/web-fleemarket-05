@@ -40,7 +40,6 @@ export class RegionsController {
   @ApiOkResponse({ type: RegionResponse })
   @Get('/search')
   async searchRegions(@Query() searchRegionDto: SearchRegionDto) {
-    const regions = await this.regionsService.findRegionsByKeyword(searchRegionDto);
-    return { regions };
+    return await this.regionsService.findRegionsByKeyword(searchRegionDto);
   }
 }

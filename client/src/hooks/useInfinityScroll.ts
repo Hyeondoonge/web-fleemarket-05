@@ -21,8 +21,8 @@ export function useInfinityScroll(callback: () => void) {
         });
       },
       {
-        threshold: 0.7,
-        rootMargin: '-90% 0px 0px 0px',
+        rootMargin: '0px 0px 50% 0px',
+        threshold: 0.5,
       }
     );
   };

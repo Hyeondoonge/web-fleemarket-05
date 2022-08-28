@@ -1,5 +1,6 @@
+import styled, { css } from 'styled-components';
 import Dropdown from 'components/common/Dropdown';
-import styled from 'styled-components';
+import { ArticleStatus } from 'types/article';
 
 export const ArticleItem = styled.li`
   position: relative;
@@ -29,11 +30,12 @@ export const Thumbnail = styled.img`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.125rem;
+  gap: 0.25rem;
 `;
 
 export const Title = styled.h2`
   font-size: 1.125rem;
+
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -45,9 +47,16 @@ export const MoreInfo = styled.div`
   font-size: 0.825rem;
   color: ${({ theme }) => theme.color.grey[400]};
 `;
+
+export const PriceInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+`;
+
 export const Price = styled.div`
-  font-weight: 600;
-  font-size: 1.125rem;
+  font-weight: 700;
+  font-size: 1rem;
 `;
 
 export const Like = styled.div`
@@ -62,6 +71,19 @@ export const Like = styled.div`
   color: ${({ theme }) => theme.color.grey[500]};
 `;
 
+export const Status = styled.div<{ $status: ArticleStatus }>`
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  ${({ theme, $status }) => css`
+    color: ${$status === ArticleStatus.Reserved ? theme.color.white : theme.color.grey[900]};
+    background-color: ${$status === ArticleStatus.Reserved
+      ? theme.color.primary
+      : theme.color.grey[300]};
+  `};
+  
 export const DropdownWrapper = styled.div`
   pointer-events: auto;
   position: absolute;

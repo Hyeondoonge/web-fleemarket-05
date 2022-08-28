@@ -1,37 +1,45 @@
 import React, { useEffect, useRef } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { articlesPageState, articlesState } from 'recoil/selectors/articles.selector';
+import {
+  articlesPageState,
+  articlesQuery,
+  articlesState,
+} from 'recoil/selectors/articles.selector';
 import * as Styled from './ArticleList.styled';
 import ArticleItem from 'components/common/ArticleItem/ArticleItem';
 import { useInfinityScroll } from 'hooks/useInfinityScroll';
-import { requestGetArticles } from 'apis/articles';
-import { selectedCategoryState } from 'recoil/atoms/categories.atom';
-import { userRegion } from 'recoil/atoms/region.atom';
-import { GetArticlesParam } from 'types/param';
+import AsyncBoundary from 'components/boundary/AsyncBoundary';
+import ArticleListPendingFallback from 'components/boundary/ArticleListPendingFallback';
 
 export default function ArticleList() {
+  const { articles } = useRecoilValue(articlesState);
+
+  return (
+    <>
+      <Styled.ArticleList>
+        {articles.map((article) => {
+          return <ArticleItem key={article.id} article={article} />;
+        })}
+      </Styled.ArticleList>
+      <AsyncBoundary pendingFallback={<ArticleListPendingFallback />}>
+        <ArticleListLoader />
+      </AsyncBoundary>
+      {articles.length === 0 && (
+        <Styled.DisplayTextWrapper>게시된 물건이 없어요 !</Styled.DisplayTextWrapper>
+      )}
+    </>
+  );
+}
+
+function ArticleListLoader() {
+  const articleQuery = useRecoilValue(articlesQuery);
   const [{ articles, totalCount }, setArticles] = useRecoilState(articlesState);
   const [page, setPage] = useRecoilState(articlesPageState);
-  const selectedCategory = useRecoilValue(selectedCategoryState);
-  const { selectedRegion } = useRecoilValue(userRegion);
 
   const { observe, unobserve } = useInfinityScroll(() => onIntersect());
   const target = useRef<HTMLDivElement>(null);
 
-  const onIntersect = async () => {
-    const regionId = selectedRegion;
-
-    if (!regionId) return;
-
-    const param: GetArticlesParam = { regionId, page: page + 1, per: 5 };
-
-    if (selectedCategory !== null) param.categoryId = selectedCategory.id.toString();
-
-    const data = await requestGetArticles(param);
-    setArticles({
-      articles: [...articles, ...data.articles],
-      totalCount: data.totalCount,
-    });
+  const onIntersect = () => {
     setPage(page + 1);
   };
 
@@ -47,17 +55,13 @@ export default function ArticleList() {
     }
   }, [unobserve, articles, totalCount]);
 
-  return (
-    <Styled.ArticleListLayout>
-      <Styled.ArticleList>
-        {articles.map((article) => {
-          return <ArticleItem key={article.id} article={article} />;
-        })}
-      </Styled.ArticleList>
-      <div ref={target} style={{ height: '1rem' }}></div>
-      {articles.length === 0 && (
-        <Styled.DisplayTextWrapper>게시된 물건이 없어요 !</Styled.DisplayTextWrapper>
-      )}
-    </Styled.ArticleListLayout>
-  );
+  useEffect(() => {
+    setArticles({
+      articles: [...articles, ...articleQuery.articles],
+      totalCount: articleQuery.totalCount,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [articleQuery]);
+
+  return <div ref={target} style={{ height: '1rem' }}></div>;
 }

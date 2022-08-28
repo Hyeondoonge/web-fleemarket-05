@@ -40,7 +40,7 @@ export const Region = styled.div<{ selected?: boolean }>`
   background-color: ${({ selected, theme }) => (selected ? theme.color.primary : 'transparent')};
   box-shadow: ${({ selected, theme }) =>
     `inset 0 0 0 1px ${selected ? 'transparent' : theme.color.grey[400]}`};
-  color: ${({ selected, theme }) => (selected ? theme.color.grey[900] : theme.color.grey[400])};
+  color: ${({ selected, theme }) => (selected ? theme.color.white : theme.color.grey[400])};
 
   cursor: pointer;
 `;

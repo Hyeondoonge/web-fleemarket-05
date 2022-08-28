@@ -1,22 +1,11 @@
-import { getRegionsByKeword } from 'apis/region';
 import { atom, selector } from 'recoil';
 import { Region } from 'types/Region';
 import { getSelectedRegionLocalStorage } from 'utils/storage.util';
 import { currentUserState } from './user.atom';
 
-export const regionResultsState = atom<Region[]>({
+export const regionResultsState = atom<{ regions: Region[]; totalCount: number }>({
   key: 'regionResultsState',
-  default: selector({
-    key: 'regionDetaultState',
-    get: async ({ get }) => {
-      const data = await getRegionsByKeword({
-        page: get(regionResultsPageState),
-        keyword: get(searchKeywordState),
-        per: 20,
-      });
-      return data;
-    },
-  }),
+  default: { regions: [], totalCount: 0 },
 });
 
 export const regionResultsPageState = atom<number>({
@@ -29,7 +18,7 @@ export const searchKeywordState = atom<string>({
   default: '',
 });
 
-export const userRegion = selector({
+export const userRegion = selector<{ regions: Region[]; selectedRegion: null | number }>({
   key: 'userRegionValue',
   get: ({ get }) => {
     const { user } = get(currentUserState);
@@ -37,13 +26,16 @@ export const userRegion = selector({
       return { regions: [], selectedRegion: null };
     }
 
-    const { regions } = user;
-
     const selectedRegion = getSelectedRegionLocalStorage();
-    const isValidRegion = regions.some(({ id }) => id === Number(selectedRegion));
+    const isValidRegion = user.regions.some(({ id }) => id === Number(selectedRegion));
     if (!isValidRegion) {
-      return { regions: regions, selectedRegion: regions[0].id };
+      return { regions: user.regions, selectedRegion: user.regions[0].id };
     }
-    return { regions: regions, selectedRegion: Number(selectedRegion) };
+    return { regions: user.regions, selectedRegion: Number(selectedRegion) };
   },
+});
+
+export const selectdRegion = atom<null | number>({
+  key: 'userSelectedRegionState',
+  default: null,
 });

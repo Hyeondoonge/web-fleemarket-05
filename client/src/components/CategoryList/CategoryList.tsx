@@ -1,9 +1,10 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { selectedCategoryState } from 'recoil/atoms/categories.atom';
 import { Category } from 'types/category';
 import { useModalContext } from 'hooks/useModalContext';
 import * as Styled from './CategoryList.styled';
+import { articlesPageState, articlesState } from 'recoil/selectors/articles.selector';
 
 interface CategoryListProps {
   categories: Category[];
@@ -11,14 +12,19 @@ interface CategoryListProps {
 
 export default function CategoryList({ categories }: CategoryListProps) {
   const { modalState, setModalState } = useModalContext();
+  const setArticles = useSetRecoilState(articlesState);
   const [selectedCategory, setSelectedCategory] = useRecoilState(selectedCategoryState);
+  const setPage = useSetRecoilState(articlesPageState);
 
   return (
     <Styled.CategoryList>
       <Styled.CategoryItem
         $selected={selectedCategory === null}
         onClick={() => {
+          if (selectedCategory === null) return;
+          setArticles({ articles: [], totalCount: 0 });
           setSelectedCategory(null);
+          setPage(1);
           setModalState({ ...modalState, categorySelect: false });
         }}
       >
@@ -30,7 +36,10 @@ export default function CategoryList({ categories }: CategoryListProps) {
           key={id}
           $selected={id === selectedCategory?.id}
           onClick={() => {
+            if (selectedCategory?.id === id) return;
+            setArticles({ articles: [], totalCount: 0 });
             setSelectedCategory({ id, name, imgUrl });
+            setPage(1);
             setModalState({ ...modalState, categorySelect: false });
           }}
         >
