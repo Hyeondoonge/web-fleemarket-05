@@ -1,16 +1,13 @@
 import React from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { selectedCategoryState } from 'recoil/atoms/categories.atom';
-import { Category } from 'types/category';
 import { useModalContext } from 'hooks/useModalContext';
 import * as Styled from './CategoryList.styled';
 import { articlesPageState, articlesState } from 'recoil/selectors/articles.selector';
+import { useCategoryValue } from 'hooks/useCategoryValue';
 
-interface CategoryListProps {
-  categories: Category[];
-}
-
-export default function CategoryList({ categories }: CategoryListProps) {
+export default function CategoryList() {
+  const categories = useCategoryValue();
   const { modalState, setModalState } = useModalContext();
   const setArticles = useSetRecoilState(articlesState);
   const [selectedCategory, setSelectedCategory] = useRecoilState(selectedCategoryState);

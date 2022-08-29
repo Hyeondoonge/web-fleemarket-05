@@ -1,5 +1,4 @@
 import React from 'react';
-import ArticleList from 'components/ArticleList';
 import Dropdown from 'components/common/Dropdown';
 import Header from 'components/common/Header';
 import Icon from 'components/common/Icon';
@@ -78,10 +77,7 @@ export default function HomePageLayout({ children }: { children: React.ReactNode
           </Styled.Menu>
         </Header.Inner>
       </Header>
-      <Scrollable headerHeight="6rem">
-        <ArticleList />
-      </Scrollable>
-      {children}
+      <Scrollable headerHeight="6rem">{children}</Scrollable>
       {modalState.regionSelect && (
         <SideModal>
           <RegionSelectpage />

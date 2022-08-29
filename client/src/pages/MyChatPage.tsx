@@ -2,12 +2,12 @@ import React from 'react';
 import MyChatList from 'components/chat/MyChatList';
 import MyChatPageLayout from 'layouts/MyChatPageLayout';
 import AsyncBoundary from 'components/boundary/AsyncBoundary';
-import LoadingFallback from 'components/boundary/LoadingFallback';
+import ChatListPendingFallback from 'components/boundary/ChatListPendingFallback';
 
 export default function ChatPage() {
   return (
     <MyChatPageLayout>
-      <AsyncBoundary pendingFallback={<LoadingFallback />}>
+      <AsyncBoundary pendingFallback={<ChatListPendingFallback />}>
         <MyChatList />
       </AsyncBoundary>
     </MyChatPageLayout>
