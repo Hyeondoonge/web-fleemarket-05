@@ -4,7 +4,7 @@ import Scrollable from 'components/common/Scrollable';
 import * as Styled from './RegionSearchLayout.styled';
 import SearchInput from 'components/region/SearchInput';
 import { useModalContext } from 'hooks/useModalContext';
-import { Region } from 'types/Region';
+import { Region } from 'types/region';
 import { useInfinityScroll } from 'hooks/useInfinityScroll';
 import { useSetRecoilState } from 'recoil';
 import { searchKeywordState } from 'recoil/atoms/region.atom';

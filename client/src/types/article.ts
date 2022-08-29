@@ -1,4 +1,4 @@
-import { Category } from './Category';
+import { Category } from './category';
 import { Region, User } from './user';
 
 export enum ArticleStatus {
