@@ -38,6 +38,11 @@ export const HeaderInner = styled.div`
   z-index: calc(${Z_INDEX.STICKY} + 1);
 `;
 
+export const HeaderText = styled.h2`
+  font-size: 1.25rem;
+  font-weight: 700;
+`;
+
 export const HeaderTitle = styled.h1`
   position: absolute;
   top: 50%;

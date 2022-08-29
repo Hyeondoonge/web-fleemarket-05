@@ -41,6 +41,8 @@ export default function ArticleDescription() {
         조회 {article.viewCount}
         {' ∙ '}
         관심 {article.likeCount}
+        {' ∙ '}
+        채팅 {article.chatCount}
       </Styled.CategoryWrapper>
     </Styled.Wrapper>
   );

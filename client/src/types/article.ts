@@ -1,4 +1,4 @@
-import { Category } from './category';
+import { Category } from './Category';
 import { Region, User } from './user';
 
 export enum ArticleStatus {
@@ -24,4 +24,5 @@ export interface Article {
   category: Category;
   likeCount: number;
   isLike: boolean;
+  chatCount: number;
 }

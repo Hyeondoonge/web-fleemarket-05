@@ -17,14 +17,16 @@ export default function MyPage() {
   });
 
   const onLogout = async () => {
-    await mutate();
+    await mutate(undefined);
   };
 
   return (
     <>
       <Header>
         <Header.Background />
-        <Header.Title>마이페이지</Header.Title>
+        <Header.Inner>
+          <Header.Text>나의 정보</Header.Text>
+        </Header.Inner>
       </Header>
       <BottomNavigation />
       <Wrapper>

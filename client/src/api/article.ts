@@ -82,3 +82,10 @@ export const requestEditArticle =
       data,
     });
   };
+
+export const requestDeletArticle = async (articleId: string | number) => {
+  await mutation({
+    url: API_URL.DELETE_ARTICLE(articleId),
+    method: 'DELETE',
+  });
+};

@@ -7,7 +7,7 @@ import { requestLikeorDislikeArticle } from 'api/article';
 import * as Styled from './ArticleFooter.styled';
 
 export default function ArticleFooter() {
-  const { article, refresh } = useArticleQuery();
+  const { isMyArticle, article, refresh } = useArticleQuery();
   const { isLoading, mutate } = useMutation(requestLikeorDislikeArticle, {
     onFailure: () => {
       alert('요청에 실패하였습니다.');
@@ -34,7 +34,11 @@ export default function ArticleFooter() {
         <strong>{article.price.toLocaleString()}원</strong>
         <span>가격 제안 {article.isDiscountable ? '가능' : '불가'}</span>
       </Styled.PriceWrapper>
-      <Button size="lg">문의하기</Button>
+      <Button size="lg" type="button">
+        {isMyArticle
+          ? `채팅 목록 보기${0 < article.chatCount ? `(${article.chatCount})` : ''}`
+          : '채팅하기'}
+      </Button>
     </Styled.BottomWrapper>
   );
 }

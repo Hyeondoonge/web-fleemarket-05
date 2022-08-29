@@ -7,6 +7,7 @@ import {
   HeaderButton,
   HeaderContentWrapper,
   HeaderInner,
+  HeaderText,
   HeaderTitle,
   HeaderWrapper,
 } from './Header.styled';
@@ -107,6 +108,7 @@ export default Object.assign(HeaderMain, {
   Background: HeaderBackground,
   AnimatedBackground: HeaderAnimatedBackground,
   Title: HeaderTitle,
+  Text: HeaderText,
   IconButton: HeaderIconButton,
   BackwardButton: HeaderBackwardButton,
 });

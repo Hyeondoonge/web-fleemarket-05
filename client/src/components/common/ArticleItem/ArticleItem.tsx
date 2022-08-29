@@ -13,7 +13,6 @@ import * as Styled from './ArticleItem.styled';
 
 export default function ArticleItem({
   article: { id, title, region, price, thumbnail, createdAt, likeCount, status, seller },
-
 }: {
   article: Article;
 }) {
