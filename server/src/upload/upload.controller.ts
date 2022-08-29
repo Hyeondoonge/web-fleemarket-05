@@ -30,6 +30,6 @@ export class UploadController {
   @UseInterceptors(FilesInterceptor('images', 10))
   async uploadImages(@UploadedFiles(ImagesValidationPipe) images: Express.Multer.File[]) {
     const result = await this.uploadService.uploadFiles(images);
-    return { result };
+    return result;
   }
 }

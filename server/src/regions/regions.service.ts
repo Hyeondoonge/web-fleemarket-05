@@ -1,6 +1,6 @@
-import { ErrorCode } from './../exceptions/enums/error-code.enum';
+import { ErrorCode } from '../common/exceptions/enums/error-code.enum';
 import { HttpStatus } from '@nestjs/common';
-import { CustomException } from './../exceptions/custom.exception';
+import { CustomException } from '../common/exceptions/custom.exception';
 import { Region } from './entities/region.entity';
 import { CreateUserRegionDto } from './dtos/create-user-region.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -69,8 +69,8 @@ export class RegionsService {
       skip: (page - 1) * per,
       take: per,
     };
-    const regions = await this.regionRepository.find(findOptions);
+    const [results, totalCount] = await this.regionRepository.findAndCount(findOptions);
 
-    return regions;
+    return { regions: results, totalCount };
   }
 }

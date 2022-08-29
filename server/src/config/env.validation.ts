@@ -43,7 +43,13 @@ class EnvironmentVariables {
 
   @IsString()
   AWS_S3_BUCKET_PATH: string;
-  
+
+  @IsString()
+  AWS_S3_ACCESS_KEY: string;
+
+  @IsString()
+  AWS_S3_SECRET_KEY: string;
+
   @IsString()
   GITHUB_CLIENT_ID: string;
 

@@ -1,21 +1,50 @@
-export const color = {
-  black: '#222222',
+export const baseColor = {
   white: '#ffffff',
-  primary: '#2AC1BC',
-  secondary: '#A0E1E0',
-  tertiary: '#219A95',
+  black: '#000000',
+  primary: '#4caf50',
+  secondary: '#80e27e',
+  tertiary: '#087f23',
   error: '#F45452',
+};
+
+export const lightColor = {
+  ...baseColor,
   grey: {
-    100: '#fafafa',
-    200: '#f5f5f5',
-    300: '#e5e5e5',
-    400: '#d4d4d4',
-    500: '#a3a3a3',
-    600: '#737373',
-    700: '#525252',
-    800: '#404040',
-    900: '#262626',
+    50: '#fafaf9',
+    100: '#f5f5f4',
+    200: '#e7e5e4',
+    300: '#d6d3d1',
+    400: '#a8a29e',
+    500: '#78716c',
+    600: '#57534e',
+    700: '#44403c',
+    800: '#292524',
+    900: '#1c1917',
+  },
+  bg: {
+    front: '#ffffff',
+    back: '#f1f1f1',
   },
 };
 
-export type ColorTheme = typeof color;
+export const darkColor = {
+  ...baseColor,
+  grey: {
+    50: '#1c1917',
+    100: '#292524',
+    200: '#44403c',
+    300: '#57534e',
+    400: '#78716c',
+    500: '#a8a29e',
+    600: '#d6d3d1',
+    700: '#e7e5e4',
+    800: '#f5f5f4',
+    900: '#fafaf9',
+  },
+  bg: {
+    front: '#222222',
+    back: '#000000',
+  },
+};
+
+export type ColorTheme = typeof lightColor;

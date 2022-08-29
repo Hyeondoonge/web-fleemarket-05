@@ -1,5 +1,5 @@
 import { FileValidator } from '@nestjs/common';
-import { ErrorCode } from 'src/exceptions/enums';
+import { ErrorCode } from 'src/common/exceptions/enums';
 
 interface FileCountValidationOptions {
   fileCount: number;

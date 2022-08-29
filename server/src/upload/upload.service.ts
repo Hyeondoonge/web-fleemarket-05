@@ -3,8 +3,8 @@ import * as S3 from 'aws-sdk/clients/s3';
 import { randomUUID } from 'crypto';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { CustomException } from 'src/exceptions';
-import { ErrorCode } from 'src/exceptions/enums';
+import { CustomException } from 'src/common/exceptions';
+import { ErrorCode } from 'src/common/exceptions/enums';
 
 @Injectable()
 export class UploadService {
@@ -13,6 +13,10 @@ export class UploadService {
   constructor(private readonly configService: ConfigService) {
     this.s3 = new S3({
       region: configService.get<string>('AWS_S3_REGION'),
+      credentials: {
+        accessKeyId: configService.get<string>('AWS_S3_ACCESS_KEY'),
+        secretAccessKey: configService.get<string>('AWS_S3_SECRET_KEY'),
+      },
     });
   }
 
@@ -34,7 +38,7 @@ export class UploadService {
       const key = this.createKey(file);
       const bucket = this.configService.get<string>('AWS_S3_BUCKET');
       await this.s3
-        .makeUnauthenticatedRequest('putObject', {
+        .putObject({
           Key: key,
           Bucket: bucket,
           Body: file.buffer,

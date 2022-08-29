@@ -11,6 +11,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: isProduction ? 'bundle.[contenthash].js' : 'bundle.[name].js',
     clean: true,
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
@@ -29,7 +30,7 @@ module.exports = {
         use: [
           {
             loader: '@svgr/webpack',
-            options: { icon: true, typescript: true },
+            options: { typescript: true, ext: 'tsx' },
           },
         ],
       },

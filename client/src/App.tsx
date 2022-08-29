@@ -1,29 +1,29 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 import { ThemeProvider } from 'styled-components';
-import { GlobalStyle, theme } from './styles';
+import Router from './router/Router';
+import ToggleThemeButton from './components/common/ToggleThemeButton';
+import AsyncBoundary from 'components/boundary/AsyncBoundary';
+import PendingFallback from 'components/boundary/PendingFallback';
+import RejectedFallback from 'components/boundary/RejectedFallback';
+import { GlobalStyle } from './styles';
+import { themeValue } from './recoil/selectors/theme.selector';
+import { ModalContextProvider } from 'contexts/ModalContext';
 
 export default function App() {
+  const { theme } = useRecoilValue(themeValue);
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <div>
-        <h1>우아마켓</h1>
-      </div>
-      <button
-        onClick={async () => {
-          const res = await fetch('http://localhost:4000/api/auth/github');
-          const { url } = await res.json();
-
-          console.log(url);
-          if (typeof url === 'string') {
-            window.location.href = url;
-            // window.history.pushState(null, '', url);
-          }
-        }}
-      >
-        {' '}
-        Github 로그인
-      </button>
+      <ModalContextProvider>
+        <GlobalStyle />
+        <ToggleThemeButton />
+        <AsyncBoundary
+          rejectedFallback={<RejectedFallback />}
+          pendingFallback={<PendingFallback />}
+        >
+          <Router />
+        </AsyncBoundary>
+      </ModalContextProvider>
     </ThemeProvider>
   );
 }

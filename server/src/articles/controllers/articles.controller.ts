@@ -37,14 +37,14 @@ export class ArticlesController {
   @ApiOperation({ description: 'Article 생성 API' })
   @Post('/')
   async createArticle(@AuthUser() user: User, @Body() createArticleDto: CreateArticleDto) {
-    const newArticle = await this.articlesService.createArticle(user.id, createArticleDto);
+    const newArticle = await this.articlesService.createArticle(user, createArticleDto);
     return newArticle;
   }
 
   @ApiOperation({ description: 'Article 가져오기 API' })
   @Get('/:id')
-  async getArticle(@Param('id') articleId: number) {
-    const article = await this.articlesService.getArticle(articleId);
+  async getArticle(@AuthUser() user: User, @Param('id') articleId: number) {
+    const article = await this.articlesService.getArticle(user.id, articleId);
     return article;
   }
 
@@ -79,7 +79,7 @@ export class ArticlesController {
   async likeArticles(@AuthUser() user: User, @Param('id') articleId: number) {
     await this.articlesService.likeArticle(user, articleId);
     return {
-      user,
+      status: true,
     };
   }
 
@@ -88,7 +88,14 @@ export class ArticlesController {
   async dislikeArticle(@AuthUser() user: User, @Param('id') articleId: number) {
     await this.articlesService.dislikeArticle(user, articleId);
     return {
-      user,
+      status: true,
     };
+  }
+
+  @ApiOperation({ description: 'Article 채팅 목록 가져오기' })
+  @Get('/:id/chats')
+  async getChatsByArticle(@AuthUser() user: User, @Param('id') articleId: number) {
+    const chats = await this.articlesService.getChatsByArticle(user.id, articleId);
+    return chats;
   }
 }

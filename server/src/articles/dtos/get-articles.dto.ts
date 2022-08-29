@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsOptional, IsPositive } from 'class-validator';
 import { PagintaionDto } from 'src/common/dtos';
@@ -8,5 +8,10 @@ export class GetArticlesDto extends PagintaionDto {
   @Type(() => Number)
   @IsPositive()
   @IsOptional()
-  category?: number;
+  categoryId?: number;
+
+  @ApiProperty({ description: '해당하는 지역' })
+  @Type(() => Number)
+  @IsPositive()
+  regionId: number;
 }

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ExceptionResponse } from 'src/exceptions/responses';
+import { ExceptionResponse } from 'src/common/exceptions/responses';
 import { UploadImageResponse } from './upload-image.response';
 
 export class UploadImagesResponse {

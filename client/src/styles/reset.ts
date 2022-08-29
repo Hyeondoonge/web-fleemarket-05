@@ -103,6 +103,7 @@ export const reset = css`
     color: inherit;
     margin: 0;
     padding: 0;
+    border-radius: 0;
   }
 
   button,
@@ -189,12 +190,6 @@ export const reset = css`
     resize: vertical;
   }
 
-  input::placeholder,
-  textarea::placeholder {
-    opacity: 1;
-    color: #999;
-  }
-
   img,
   svg,
   video,
@@ -210,9 +205,5 @@ export const reset = css`
   video {
     max-width: 100%;
     height: auto;
-  }
-
-  svg {
-    fill: currentColor;
   }
 `;

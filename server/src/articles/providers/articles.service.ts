@@ -1,24 +1,29 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CustomException } from 'src/exceptions';
-import { ErrorCode } from 'src/exceptions/enums';
+import { PagintaionDto } from 'src/common/dtos';
+import { CustomException } from 'src/common/exceptions';
+import { ErrorCode } from 'src/common/exceptions/enums';
+import { RegionsService } from 'src/regions/regions.service';
 import { User } from 'src/users/entities';
-import { FindOptionsRelations, Repository } from 'typeorm';
+import { Article, UserViewArticle } from '../entities';
+import { CategoryService } from './category.service';
+import { FindOptionsOrder, FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
 import {
   CreateArticleDto,
   GetArticlesDto,
   UpdateArticleDto,
   UpdateArticleStatusDto,
 } from '../dtos';
-import { Article } from '../entities';
-import { CategoryService } from './category.service';
 
 @Injectable()
 export class ArticlesService {
   constructor(
     @InjectRepository(Article)
     private readonly articlesRepository: Repository<Article>,
-    private readonly categoryService: CategoryService
+    @InjectRepository(UserViewArticle)
+    private readonly userViewArticleRepository: Repository<UserViewArticle>,
+    private readonly categoryService: CategoryService,
+    private readonly regionsService: RegionsService
   ) {}
 
   async addViewCount(articleId: number, viewCount: number) {
@@ -27,12 +32,17 @@ export class ArticlesService {
     });
   }
 
-  async findByIdOrFail(articleId: number, relations?: FindOptionsRelations<Article>) {
+  async findByIdOrFail(
+    articleId: number,
+    relations?: FindOptionsRelations<Article>,
+    order?: FindOptionsOrder<Article>
+  ) {
     const article = await this.articlesRepository.findOne({
       where: {
         id: articleId,
       },
       relations,
+      order,
     });
     if (!article) {
       throw new CustomException(HttpStatus.NOT_FOUND, ErrorCode.AR001);
@@ -40,45 +50,87 @@ export class ArticlesService {
     return article;
   }
 
-  async getArticles({ page, per, category }: GetArticlesDto) {
+  async getArticlesWithPagination(
+    { page, per }: PagintaionDto,
+    whereOptions: FindOptionsWhere<Article> | FindOptionsWhere<Article>[]
+  ) {
     const [results, totalCount] = await this.articlesRepository.findAndCount({
-      where: {
-        category: {
-          id: category,
-        },
-      },
+      where: whereOptions,
       relations: {
         likeUsers: true,
+        region: true,
+        chats: true,
       },
       skip: (page - 1) * per,
       take: per,
+      order: {
+        id: 'DESC',
+      },
     });
-    const articles = results.map(({ likeUsers, ...results }) => ({
+    const articles = results.map(({ likeUsers, chats, ...results }) => ({
       ...results,
+      chatCount: chats.length,
       likeCount: likeUsers.length,
     }));
     return { articles, totalCount };
   }
 
-  async getArticle(articleId: number) {
-    const { likeUsers, ...article } = await this.findByIdOrFail(articleId, {
+  async getArticles({ page, per, categoryId, regionId }: GetArticlesDto) {
+    const articles = await this.getArticlesWithPagination(
+      { page, per },
+      {
+        category: {
+          id: categoryId,
+        },
+        region: {
+          id: regionId,
+        },
+      }
+    );
+    return articles;
+  }
+
+  async getArticle(userId: string, articleId: number) {
+    const { likeUsers, chats, ...article } = await this.findByIdOrFail(articleId, {
       likeUsers: true,
+      region: true,
+      chats: true,
     });
-    await this.addViewCount(articleId, article.viewCount);
+
+    const isUserViewArticle = await this.findUserViewArticle(userId, articleId);
+
+    if (!isUserViewArticle) {
+      await this.addViewCount(articleId, article.viewCount);
+      await this.createUserViewArticle(userId, articleId);
+    }
+
+    const isLike = likeUsers.some(({ id }) => id === userId);
+
     return {
       ...article,
+      chatCount: chats.length,
       likeCount: likeUsers.length,
+      isLike,
     };
   }
 
-  async createArticle(sellerId: string, { categoryId, ...createArticleDto }: CreateArticleDto) {
+  async createArticle(
+    seller: User,
+    { categoryId, regionId, ...createArticleDto }: CreateArticleDto
+  ) {
+    const isSameRegion = seller.regions.find(({ id }) => id === regionId);
+    if (!isSameRegion) {
+      throw new CustomException(HttpStatus.BAD_REQUEST, ErrorCode.AR002);
+    }
     const category = await this.categoryService.findByIdOrFail(categoryId);
+    const region = await this.regionsService.findRegionByIdOrFail(regionId);
     const newArticle = await this.articlesRepository.save(
       this.articlesRepository.create({
         ...createArticleDto,
         category,
+        region,
         seller: {
-          id: sellerId,
+          id: seller.id,
         },
       })
     );
@@ -135,5 +187,56 @@ export class ArticlesService {
     });
     article.likeUsers = article.likeUsers.filter((likeUser) => likeUser.id !== user.id);
     await this.articlesRepository.save(article);
+  }
+
+  async findUserViewArticle(userId: string, articleId: number) {
+    const isUserViewArticle = await this.userViewArticleRepository.findOneBy({
+      user: {
+        id: userId,
+      },
+      article: {
+        id: articleId,
+      },
+    });
+
+    return isUserViewArticle;
+  }
+
+  async createUserViewArticle(userId: string, articleId: number) {
+    await this.userViewArticleRepository.save(
+      this.userViewArticleRepository.create({
+        user: {
+          id: userId,
+        },
+        article: {
+          id: articleId,
+        },
+      })
+    );
+  }
+
+  async getChatsByArticle(userId: string, articleId: number) {
+    const {
+      seller: { id: sellerId },
+      chats,
+    } = await this.findByIdOrFail(
+      articleId,
+      {
+        chats: {
+          article: {
+            seller: true,
+          },
+        },
+      },
+      {
+        chats: {
+          updatedAt: 'DESC',
+        },
+      }
+    );
+    if (userId !== sellerId) {
+      throw new CustomException(HttpStatus.FORBIDDEN, ErrorCode.F001);
+    }
+    return chats;
   }
 }
