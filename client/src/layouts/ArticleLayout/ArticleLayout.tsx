@@ -7,7 +7,7 @@ import Dropdown from 'components/common/Dropdown';
 import { DropdownButton, DropdownMenus, DropdownMenu } from './ArticleLayout.styled';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_URL } from 'constants/url.constant';
-import { requestDeletArticle } from 'api/article';
+import { requestDeletArticle } from 'apis/article';
 import useMutation from 'hooks/useMutation';
 
 interface AritcleLayoutProps {

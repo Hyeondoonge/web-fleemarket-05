@@ -1,4 +1,4 @@
-import { requestMyArticles, requestMyLikes, requestMyProfile } from 'api/user';
+import { requestMyArticles, requestMyLikes, requestMyProfile } from 'apis/user';
 import { selector } from 'recoil';
 
 export const currentUserValue = selector({

@@ -1,5 +1,5 @@
 import { selectorFamily } from 'recoil';
-import { requestGetArticle } from 'api/article';
+import { requestGetArticle } from 'apis/article';
 import { Article } from 'types/article';
 
 export const currentArticleQuery = selectorFamily<Article, string | number>({

@@ -5,7 +5,7 @@ import Button from 'components/common/Button';
 import Header from 'components/common/Header';
 import useMutation from 'hooks/useMutation';
 import BottomNavigation from 'components/BottomNavigation/BottomNavigation';
-import { requestSignOut } from 'api/auth';
+import { requestSignOut } from 'apis/auth';
 import { currentUserState } from 'recoil/atoms/user.atom';
 
 export default function MyPage() {

@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 import { Chat } from 'types/chat';
-import { requestGetMyChatList } from 'api/chat';
+import { requestGetMyChatList } from 'apis/chat';
 
 export const myChatListValue = selector<Chat[]>({
   key: 'MyChatListValue',
