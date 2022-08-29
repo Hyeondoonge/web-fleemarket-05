@@ -59,12 +59,13 @@ function ArticleListLoader() {
 
   useEffect(() => {
     return () => {
+      setPage(1);
       setArticles({
         articles: [],
         totalCount: 0,
       });
     };
-  }, [setArticles]);
+  }, [setArticles, setPage]);
 
   useEffect(() => {
     setArticles({
