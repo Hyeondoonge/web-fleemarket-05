@@ -7,7 +7,7 @@ import { RegionsService } from 'src/regions/regions.service';
 import { User } from 'src/users/entities';
 import { Article, UserViewArticle } from '../entities';
 import { CategoryService } from './category.service';
-import { FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
+import { FindOptionsOrder, FindOptionsRelations, FindOptionsWhere, Repository } from 'typeorm';
 import {
   CreateArticleDto,
   GetArticlesDto,
@@ -32,12 +32,17 @@ export class ArticlesService {
     });
   }
 
-  async findByIdOrFail(articleId: number, relations?: FindOptionsRelations<Article>) {
+  async findByIdOrFail(
+    articleId: number,
+    relations?: FindOptionsRelations<Article>,
+    order?: FindOptionsOrder<Article>
+  ) {
     const article = await this.articlesRepository.findOne({
       where: {
         id: articleId,
       },
       relations,
+      order,
     });
     if (!article) {
       throw new CustomException(HttpStatus.NOT_FOUND, ErrorCode.AR001);
@@ -54,6 +59,7 @@ export class ArticlesService {
       relations: {
         likeUsers: true,
         region: true,
+        chats: true,
       },
       skip: (page - 1) * per,
       take: per,
@@ -61,8 +67,9 @@ export class ArticlesService {
         id: 'DESC',
       },
     });
-    const articles = results.map(({ likeUsers, ...results }) => ({
+    const articles = results.map(({ likeUsers, chats, ...results }) => ({
       ...results,
+      chatCount: chats.length,
       likeCount: likeUsers.length,
     }));
     return { articles, totalCount };
@@ -84,9 +91,10 @@ export class ArticlesService {
   }
 
   async getArticle(userId: string, articleId: number) {
-    const { likeUsers, ...article } = await this.findByIdOrFail(articleId, {
+    const { likeUsers, chats, ...article } = await this.findByIdOrFail(articleId, {
       likeUsers: true,
       region: true,
+      chats: true,
     });
 
     const isUserViewArticle = await this.findUserViewArticle(userId, articleId);
@@ -100,6 +108,7 @@ export class ArticlesService {
 
     return {
       ...article,
+      chatCount: chats.length,
       likeCount: likeUsers.length,
       isLike,
     };
@@ -204,5 +213,30 @@ export class ArticlesService {
         },
       })
     );
+  }
+
+  async getChatsByArticle(userId: string, articleId: number) {
+    const {
+      seller: { id: sellerId },
+      chats,
+    } = await this.findByIdOrFail(
+      articleId,
+      {
+        chats: {
+          article: {
+            seller: true,
+          },
+        },
+      },
+      {
+        chats: {
+          updatedAt: 'DESC',
+        },
+      }
+    );
+    if (userId !== sellerId) {
+      throw new CustomException(HttpStatus.FORBIDDEN, ErrorCode.F001);
+    }
+    return chats;
   }
 }

@@ -9,5 +9,6 @@ import { RegionsModule } from 'src/regions/regions.module';
   imports: [TypeOrmModule.forFeature([Category, Article, UserViewArticle]), RegionsModule],
   providers: [CategoryService, ArticlesService],
   controllers: [CategoryController, ArticlesController],
+  exports: [ArticlesService],
 })
 export class ArticlesModule {}

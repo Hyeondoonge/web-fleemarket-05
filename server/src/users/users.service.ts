@@ -89,6 +89,7 @@ export class UsersService {
           category: true,
           seller: true,
           likeUsers: true,
+          chats: true,
         },
       },
       order: {
@@ -97,7 +98,7 @@ export class UsersService {
         },
       },
     });
-    return this.addLikeCount(articles);
+    return this.addLikeCountAndChatCount(articles);
   }
 
   async findMyLikeArticles(userId: string) {
@@ -111,6 +112,7 @@ export class UsersService {
           category: true,
           seller: true,
           likeUsers: true,
+          chats: true,
         },
       },
       order: {
@@ -120,13 +122,37 @@ export class UsersService {
       },
     });
 
-    return this.addLikeCount(articles);
+    return this.addLikeCountAndChatCount(articles);
   }
 
-  addLikeCount(articles: Article[]) {
-    return articles.map(({ likeUsers, ...article }) => ({
+  addLikeCountAndChatCount(articles: Article[]) {
+    return articles.map(({ likeUsers, chats, ...article }) => ({
       ...article,
+      chatCount: chats.length,
       likeCount: likeUsers.length,
     }));
+  }
+
+  async findAllChats(userId: string) {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id: userId,
+      },
+      relations: {
+        articles: {
+          chats: {
+            article: {
+              seller: true,
+            },
+          },
+        },
+        chats: true,
+      },
+    });
+    const articleChats = user.articles.map(({ chats }) => chats).flatMap((chat) => chat);
+    const allChats = [...user.chats, ...articleChats].sort(
+      (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime()
+    );
+    return allChats;
   }
 }

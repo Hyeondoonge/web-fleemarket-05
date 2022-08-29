@@ -66,4 +66,12 @@ export class UsersController {
     const articles = await this.usersService.findMyLikeArticles(user.id);
     return articles;
   }
+
+  @UseGuards(AuthGuard)
+  @ApiOperation({ description: '사용자 모든 채팅 조회 API' })
+  @Get('/my/chats')
+  async findMyChats(@AuthUser() user: User) {
+    const articles = await this.usersService.findAllChats(user.id);
+    return articles;
+  }
 }

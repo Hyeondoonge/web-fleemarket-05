@@ -10,10 +10,10 @@ import { User } from 'src/users/entities';
   },
 })
 export class Message extends IntIDEntity {
-  @ManyToOne(() => Chat, (chat) => chat.messages)
+  @ManyToOne(() => Chat, (chat) => chat.messages, { nullable: false })
   chat: Chat;
 
-  @ManyToOne(() => User, (user) => user.sendMessages)
+  @ManyToOne(() => User, (user) => user.sendMessages, { nullable: false })
   sender: User;
 
   @Column({

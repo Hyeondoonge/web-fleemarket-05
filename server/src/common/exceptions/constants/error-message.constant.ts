@@ -21,4 +21,7 @@ export const ERROR_MESSAGE: Record<ErrorCode, string> = {
   [ErrorCode.AR001]: '해당하는 게시글을 찾을 수 없습니다.',
   [ErrorCode.AR002]: '사용자 동네가 아닙니다.',
   [ErrorCode.F001]: '권한이 없습니다.',
+  [ErrorCode.CH001]: '자기 자신의 글에 채팅을 생성할 수 없습니다.',
+  [ErrorCode.CH002]: '해당 채팅방을 찾을 수 없습니다.',
+  [ErrorCode.CH003]: '채팅방에 존재하지 않는 유저입니다.',
 };

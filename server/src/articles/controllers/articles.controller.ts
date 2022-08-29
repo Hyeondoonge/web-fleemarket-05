@@ -91,4 +91,11 @@ export class ArticlesController {
       status: true,
     };
   }
+
+  @ApiOperation({ description: 'Article 채팅 목록 가져오기' })
+  @Get('/:id/chats')
+  async getChatsByArticle(@AuthUser() user: User, @Param('id') articleId: number) {
+    const chats = await this.articlesService.getChatsByArticle(user.id, articleId);
+    return chats;
+  }
 }
