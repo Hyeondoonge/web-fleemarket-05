@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosRequestConfig } from 'axios';
-import instance from 'api/instance';
+import instance from 'apis/instance';
 import { ErrorCode, ErrorResponse } from 'types/error';
 import { API_ERROR_MESSAGE } from 'constants/message.constant';
 

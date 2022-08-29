@@ -1,6 +1,6 @@
 import { useFormContext, useWatch } from 'react-hook-form';
 import useMutation from './useMutation';
-import { requestUploadImages, UploadImagesResponse } from 'api/upload';
+import { requestUploadImages, UploadImagesResponse } from 'apis/upload';
 import { ArticleSchema } from 'constants/schema.constant';
 import { IMAGE_IS_UPLOAIDING } from 'constants/upload.constant';
 

@@ -23,7 +23,7 @@ export const ArticleItem = styled.li`
 export const Thumbnail = styled.img`
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 0.25rem;
   box-shadow: 0 0 0 1px ${({ theme }) => theme.color.grey[200]};
 `;
 

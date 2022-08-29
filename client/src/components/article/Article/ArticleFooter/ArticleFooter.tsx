@@ -3,7 +3,7 @@ import Icon from 'components/common/Icon';
 import Button from 'components/common/Button';
 import useMutation from 'hooks/useMutation';
 import useArticleQuery from 'hooks/useArticleQuery';
-import { requestLikeorDislikeArticle } from 'api/article';
+import { requestLikeorDislikeArticle } from 'apis/article';
 import * as Styled from './ArticleFooter.styled';
 
 export default function ArticleFooter() {
