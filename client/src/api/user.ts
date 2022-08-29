@@ -12,3 +12,8 @@ export async function requestMyArticles() {
   const data = await query<Article[]>(API_URL.MY_ARTICLES);
   return data;
 }
+
+export async function requestMyLikes() {
+  const data = await query<Article[]>(API_URL.MY_LIKES);
+  return data;
+}

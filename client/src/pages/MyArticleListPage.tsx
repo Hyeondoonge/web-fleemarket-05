@@ -4,7 +4,7 @@ import MyArticleListLayout from 'layouts/MyArticleListLayout';
 
 export default function MyArticleListPage() {
   return (
-    <MyArticleListLayout $title="판매목록">
+    <MyArticleListLayout title="판매목록">
       <BottomNavigation />
     </MyArticleListLayout>
   );

@@ -46,3 +46,10 @@ export const SelectedRegion = styled.h1`
   font-weight: 600;
   font-size: 1.25rem;
 `;
+
+export const Menu = styled.div`
+  display: flex;
+  align-items: flex-end;
+  font-size: 0.25rem;
+  gap: 0.25rem;
+`;

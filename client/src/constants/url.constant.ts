@@ -36,4 +36,5 @@ export const API_URL = {
   UPLOAD_IMAGE: '/upload/image',
   UPLOAD_IMAGES: '/upload/images',
   MY_ARTICLES: '/users/my/articles',
+  MY_LIKES: '/users/my/likes',
 };

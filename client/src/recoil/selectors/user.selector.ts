@@ -1,4 +1,4 @@
-import { requestMyArticles, requestMyProfile } from 'api/user';
+import { requestMyArticles, requestMyLikes, requestMyProfile } from 'api/user';
 import { selector } from 'recoil';
 
 export const currentUserValue = selector({
@@ -24,5 +24,13 @@ export const myArticleListQuery = selector({
   get: async () => {
     const myArticles = await requestMyArticles();
     return myArticles;
+  },
+});
+
+export const myLikeListQuery = selector({
+  key: 'myLikeListValue',
+  get: async () => {
+    const myLikes = await requestMyLikes();
+    return myLikes;
   },
 });

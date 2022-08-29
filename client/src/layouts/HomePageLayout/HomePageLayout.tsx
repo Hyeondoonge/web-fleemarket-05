@@ -15,10 +15,12 @@ import RegionSelectpage from 'pages/RegionSelectPage';
 import Scrollable from 'components/common/Scrollable';
 import { currentUserState } from 'recoil/atoms/user.atom';
 import { articlesPageState, articlesState } from 'recoil/selectors/articles.selector';
+import { selectedCategoryState } from 'recoil/atoms/categories.atom';
 
 export default function HomePageLayout({ children }: { children: React.ReactNode }) {
   const { modalState, setModalState } = useModalContext();
   const [user, setUser] = useRecoilState(currentUserState);
+  const selectedCategory = useRecoilValue(selectedCategoryState);
   const { regions, selectedRegion } = useRecoilValue(userRegion);
   const region = shortRegion(regions.find(({ id }) => id === selectedRegion)?.name ?? '');
 
@@ -64,13 +66,16 @@ export default function HomePageLayout({ children }: { children: React.ReactNode
           </Dropdown>
         </Header.Inner>
         <Header.Inner>
-          <button
-            onClick={() => {
-              setModalState({ ...modalState, categorySelect: true });
-            }}
-          >
-            <Icon icon="MenuIcon" size={24} />
-          </button>
+          <Styled.Menu>
+            {selectedCategory?.name}
+            <button
+              onClick={() => {
+                setModalState({ ...modalState, categorySelect: true });
+              }}
+            >
+              <Icon icon="MenuIcon" size={24} />
+            </button>
+          </Styled.Menu>
         </Header.Inner>
       </Header>
       <Scrollable headerHeight="6rem">

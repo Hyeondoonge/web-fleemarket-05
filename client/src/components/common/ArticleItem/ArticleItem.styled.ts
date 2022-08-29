@@ -83,9 +83,9 @@ export const Status = styled.div<{ $status: ArticleStatus }>`
       ? theme.color.primary
       : theme.color.grey[300]};
   `};
-  
+`;
+
 export const DropdownWrapper = styled.div`
-  pointer-events: auto;
   position: absolute;
   top: 1.375rem;
   right: 0;

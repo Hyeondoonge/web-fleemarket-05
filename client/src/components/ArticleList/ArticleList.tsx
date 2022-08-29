@@ -22,11 +22,13 @@ export default function ArticleList() {
         })}
       </Styled.ArticleList>
       <AsyncBoundary pendingFallback={<ArticleListPendingFallback />}>
+        <>
+          {articles.length === 0 && (
+            <Styled.DisplayTextWrapper>게시된 물건이 없어요 !</Styled.DisplayTextWrapper>
+          )}
+        </>
         <ArticleListLoader />
       </AsyncBoundary>
-      {articles.length === 0 && (
-        <Styled.DisplayTextWrapper>게시된 물건이 없어요 !</Styled.DisplayTextWrapper>
-      )}
     </>
   );
 }
@@ -54,6 +56,15 @@ function ArticleListLoader() {
       unobserve(target.current);
     }
   }, [unobserve, articles, totalCount]);
+
+  useEffect(() => {
+    return () => {
+      setArticles({
+        articles: [],
+        totalCount: 0,
+      });
+    };
+  }, [setArticles]);
 
   useEffect(() => {
     setArticles({
