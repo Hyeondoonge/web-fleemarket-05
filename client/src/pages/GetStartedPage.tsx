@@ -7,7 +7,7 @@ import GetStartedLayout from 'layouts/GetStartedLayout';
 import { currentUserValue } from 'recoil/selectors/user.selector';
 import { PAGE_URL } from 'constants/url.constant';
 import useMutation from 'hooks/useMutation';
-import { requestEmailSignIn } from 'api/auth';
+import { requestEmailSignIn } from 'apis/auth';
 
 export default function GetStartedPage() {
   const navigate = useNavigate();
