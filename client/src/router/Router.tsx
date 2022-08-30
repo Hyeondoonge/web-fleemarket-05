@@ -1,11 +1,11 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
-import LoggedInRoutes from './LoggedInRoutes';
-import { currentUserState } from 'recoil/atoms/user.atom';
 import { userRegion } from 'recoil/atoms/region.atom';
-import NotSetRegionRoutes from './NotSetRegionRoutes';
-import NotLoggedInRoutes from './NotLoggedInRoutes';
+import { currentUserState } from 'recoil/atoms/user.atom';
+const LoggedInRoutes = React.lazy(() => import('./LoggedInRoutes'));
+const NotSetRegionRoutes = React.lazy(() => import('./NotSetRegionRoutes'));
+const NotLoggedInRoutes = React.lazy(() => import('./NotLoggedInRoutes'));
 
 export default function Router() {
   const { isLoggedIn } = useRecoilValue(currentUserState);

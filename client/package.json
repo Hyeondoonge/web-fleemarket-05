@@ -8,7 +8,8 @@
     "build": "NODE_ENV='production' webpack",
     "dev": "webpack serve",
     "lint": "eslint \"src/**/*.{ts,tsx}\" --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "analyze": "webpack-bundle-analyzer ./dist/bundle-report.json --default-sizes gzip"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.7",
@@ -36,6 +37,7 @@
     "babel-plugin-styled-components": "^2.0.7",
     "html-webpack-plugin": "^5.5.0",
     "tsconfig-paths-webpack-plugin": "^4.0.0",
+    "webpack-bundle-analyzer": "^4.6.1",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.0",
     "webpack-manifest-plugin": "^5.0.0"
