@@ -5,7 +5,7 @@ import useArticleQuery from 'hooks/useArticleQuery';
 import { ArticleStatus } from 'types/article';
 import { DropdownButton, DropdownMenus, DropdownMenu } from './ArticleStatusDropdown.styled';
 import { ARTICLE_STATUS } from 'constants/article-status.constant';
-import { requestChangeArticleStatus } from 'api/article';
+import { requestChangeArticleStatus } from 'apis/article';
 import useMutation from 'hooks/useMutation';
 
 export default function ArticleStatusDropdown() {

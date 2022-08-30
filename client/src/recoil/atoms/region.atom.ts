@@ -1,5 +1,5 @@
 import { atom, selector } from 'recoil';
-import { Region } from 'types/Region';
+import { Region } from 'types/region';
 import { getSelectedRegionLocalStorage } from 'utils/storage.util';
 import { currentUserState } from './user.atom';
 

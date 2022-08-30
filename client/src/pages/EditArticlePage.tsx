@@ -7,7 +7,7 @@ import AritcleFormLayout from 'layouts/ArticleFormLayout';
 import AsyncBoundary from 'components/boundary/AsyncBoundary';
 import LoadingFallback from 'components/boundary/LoadingFallback';
 import useMutation from 'hooks/useMutation';
-import { convertArticleSchema, requestEditArticle } from 'api/article';
+import { convertArticleSchema, requestEditArticle } from 'apis/article';
 import useArticleQuery from 'hooks/useArticleQuery';
 import ArticleRejectedFallback from 'components/boundary/ArticleRejectedFallback';
 import { PAGE_URL } from 'constants/url.constant';

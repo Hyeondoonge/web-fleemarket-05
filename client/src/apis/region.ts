@@ -1,4 +1,4 @@
-import { Region } from 'types/Region';
+import { Region } from 'types/region';
 
 export async function getRegionsByKeword({
   keyword,

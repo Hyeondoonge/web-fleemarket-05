@@ -9,7 +9,7 @@ import AsyncBoundary from 'components/boundary/AsyncBoundary';
 import LoadingFallback from 'components/boundary/LoadingFallback';
 import useMutation from 'hooks/useMutation';
 import { userRegion } from 'recoil/atoms/region.atom';
-import { convertArticleSchema, requestCreateArticle } from 'api/article';
+import { convertArticleSchema, requestCreateArticle } from 'apis/article';
 import { PAGE_URL } from 'constants/url.constant';
 import { ArticleSchema, ARTICLE_SCHEMA } from 'constants/schema.constant';
 

@@ -1,19 +1,13 @@
 import React from 'react';
 import Header from 'components/common/Header';
-import ErrorPage from 'pages/ErrorPage';
-import LoadingIndicator from 'components/common/LoadingIndiactor/LoadingIndicator';
 import * as Styled from './CategorySelectLayout.styled';
 import CategoryList from 'components/CategoryList';
 import { useModalContext } from 'hooks/useModalContext';
-import { useCategoryValue } from 'hooks/useCategoryValue';
+import AsyncBoundary from 'components/boundary/AsyncBoundary';
+import CategryListPendingFallback from 'components/boundary/CategryListPendingFallback';
 
 export default function CategorySelectLayout() {
   const { modalState, setModalState } = useModalContext();
-  const { isLoading, isError, contents } = useCategoryValue();
-
-  if (isError) return <ErrorPage />;
-
-  const categories = contents;
 
   return (
     <>
@@ -24,9 +18,11 @@ export default function CategorySelectLayout() {
           onClick={() => setModalState({ ...modalState, categorySelect: false })}
         />
       </Header>
-      <Styled.CategorySelectLayout>
-        {isLoading ? <LoadingIndicator /> : <CategoryList categories={categories} />}
-      </Styled.CategorySelectLayout>
+      <AsyncBoundary pendingFallback={<CategryListPendingFallback />}>
+        <Styled.CategorySelectLayout>
+          <CategoryList />
+        </Styled.CategorySelectLayout>
+      </AsyncBoundary>
     </>
   );
 }

@@ -1,45 +1,6 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import { FADE_IN, FADE_OUT, SCALE_DOWN, SCALE_UP } from 'styles/keyframes';
 import { Z_INDEX } from 'styles/z-index';
-
-const FADE_IN = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const FADE_OUT = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-`;
-
-const SCALE_UP = keyframes`
-  from {
-    transform: scale(0);
-    opacity: 1;
-  }
-  to {
-    transform: scale(1);
-    opacity: 0;
-  }
-`;
-
-const SCALE_DOWN = keyframes`
-  from {
-    transform: scale(1);
-    opacity: 0;
-  }
-  to {
-    transform: scale(0);
-    opacity: 1;
-  }
-`;
 
 export const Wrapper = styled.div`
   position: relative;

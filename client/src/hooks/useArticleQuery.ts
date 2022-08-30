@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { currentUserState } from 'recoil/atoms/user.atom';
 import { currentArticleState } from 'recoil/atoms/article.atom';
-import { requestGetArticle } from 'api/article';
+import { requestGetArticle } from 'apis/article';
 
 export default function useArticleQuery() {
   const { id } = useParams();

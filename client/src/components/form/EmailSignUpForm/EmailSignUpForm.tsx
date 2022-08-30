@@ -9,7 +9,7 @@ import AuthInput from 'components/common/AuthInput';
 import useMutation from 'hooks/useMutation';
 import { currentUserState } from 'recoil/atoms/user.atom';
 import { useEmailSignUpContext } from 'layouts/EmailSignUpLayout';
-import { requestEmailSignUp, requestIsEmailAvailable } from 'api/auth';
+import { requestEmailSignUp, requestIsEmailAvailable } from 'apis/auth';
 import { PASSOWRD_REGEX_LIST } from 'constants/regex.constant';
 import { EmailSignUpSchema, EMAIL_SIGN_UP_SCHEMA } from 'constants/schema.constant';
 import * as Styled from './EmailSignUpForm.styled';

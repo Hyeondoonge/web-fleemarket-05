@@ -5,7 +5,7 @@ import { useRecoilRefresher_UNSTABLE } from 'recoil';
 import Button from 'components/common/Button';
 import AuthInput from 'components/common/AuthInput';
 import useMutation from 'hooks/useMutation';
-import { requestEmailSignIn } from 'api/auth';
+import { requestEmailSignIn } from 'apis/auth';
 import { currentUserValue } from 'recoil/selectors/user.selector';
 import { EmailSignInSchema, EMAIL_SIGN_IN_SCHEMA } from 'constants/schema.constant';
 import * as Styled from './EmailSignInForm.styled';
